@@ -65,12 +65,34 @@ html{scroll-snap-type:none!important;scroll-padding-top:0}
 }
 /* Images are separate optimized files, loaded when the guide approaches. */
 .route-card img{content-visibility:auto}
+
+/* v5: reversible, scroll-linked content slides; deliberately NO scroll snapping. */
+html{scroll-snap-type:none!important;scroll-behavior:smooth}
+body{background:#e9f6ff}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 80% 12%,#d1f0ff 0,transparent 48%),radial-gradient(ellipse at 8% 85%,#e0eafc 0,transparent 54%),linear-gradient(170deg,#f9fcff 0%,#e9f7ff 100%)}
+.story-chapter{isolation:isolate;overflow:hidden;min-height:115svh;padding-block:clamp(115px,13svh,165px);background:transparent!important}
+.story-chapter::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(238,248,255,.25),rgba(255,255,255,.72),rgba(238,248,255,.24))}
+.story-chapter .story-content{will-change:transform,opacity;transform:translate3d(0,var(--story-y,0px),0);opacity:var(--story-opacity,1);transition:none!important}
+.story-guide{background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 18%)!important}
+.story-guide>.container{transform:translate3d(0,var(--guide-y,0px),0);opacity:var(--guide-opacity,1);transition:none!important}
+/* visual pause between chapters, not a mandatory stop */
+.story-chapter + .story-chapter{border-top:1px solid rgba(145,201,231,.24)}
+@media(max-width:620px){
+ .story-chapter{min-height:115svh;padding-top:102px;padding-bottom:100px}
+ .story-chapter .container{width:100%}
+ .story-chapter .big{margin-top:18px}
+ .story-chapter .message{line-height:1.82}
+ .story-chapter .card{margin-top:30px}
+ .story-chapter .section-next{margin-top:36px}
+ .story-chapter .exhibitions{margin-top:17px}
+}
+@media(prefers-reduced-motion:reduce){.story-chapter .story-content,.story-guide>.container{transform:none!important;opacity:1!important;will-change:auto}}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a href="#details">전시 정보</a><a href="#way">오시는 길 ↗</a></div></header>
 <section class="intro" id="home"><div class="intro-inner"><div class="eyebrow">2026 GRADUATION EXHIBITION</div><h1 class="hero"><span>Beyond</span><span>the Code.</span></h1><p>코드 너머, 우리의 가능성을 만나다.<br>경인여자대학교 컴퓨터소프트웨어학과 3학년 캡스톤디자인 · 2학년 창의작품 전시회</p><div class="arrow">아래로 스크롤해 초대장을 완성하세요 ↓</div></div></section>
 <section class="code-stage" id="experience"><div class="sticky"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div><div class="transform" id="transform"><div class="transform-inner"><div class="eyebrow">COMPILED SUCCESSFULLY</div><h2>YOU ARE<br>INVITED.</h2><p>2026 CAPSTONE DESIGN EXHIBITION</p></div></div></div></section>
-<section class="invite" id="invitation"><div class="container"><div class="reveal"><div class="section-label">01 / THE INVITATION</div><h2 class="big">우리의 이야기가<br>전시회로 완성됩니다.</h2><p class="message">학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간.<br><br>2026년 11월 13일, 경인여자대학교 컴퓨터소프트웨어학과의 3학년 캡스톤디자인 전시회와 2학년 창의작품 전시회에 여러분을 초대합니다.</p></div><div class="card reveal"><div class="section-label">YOU ARE INVITED · 2026</div><h3 class="card-title">Capstone<br>Design<br>Exhibition</h3><p class="message" style="font-size:14px">Dept. of Computer Software<br>경인여자대학교 컴퓨터소프트웨어학과</p><a class="section-next reveal" href="#details" aria-label="다음 섹션 전시회 안내 보기"><span><small>CONTINUE THE STORY · 02</small>전시회 안내 살펴보기</span><span class="next-arrow" aria-hidden="true">↓</span></a></div></section>
-<section class="details" id="details"><div class="container"><div class="reveal"><div class="section-label">02 / EXHIBITION INFO</div><h2 class="big">전시회 안내</h2><p class="message">2026년 11월 13일 금요일, 학생들의 결과물을 만나보세요.</p></div><div class="detailgrid"><div class="tile reveal"><small>01 · DATE</small><p><b>2026. 11. 13. (금)</b></p></div><div class="tile reveal"><small>02 · TIME</small><p><b>10:00 – 17:00</b></p></div><div class="tile reveal"><small>03 · PLACE</small><p>경인여자대학교<br><b>본관 3층 · 307호 / 308호</b></p></div></div><div class="exhibitions reveal"><article class="exhibit"><div class="exhibit-badge">3학년 · 본관 308호</div><h3>캡스톤디자인 전시회</h3><p>3학년 학생들이 완성한 작품을 직접 전시합니다.</p></article><article class="exhibit"><div class="exhibit-badge">2학년 · 본관 307호</div><h3>창의작품 전시회</h3><p>2학년 학생들의 작품 기획 내용을 PPT 형식의 패널로 전시합니다.</p></article><a class="section-next reveal" href="#way" aria-label="다음 섹션 찾아오시는 길 보기"><span><small>CONTINUE THE STORY · 03</small>찾아오시는 길 확인하기</span><span class="next-arrow" aria-hidden="true">↓</span></a></div></section>
-<section class="way" id="way"><div class="container"><div class="reveal"><div class="section-label">03 / FIND THE VENUE</div><h2 class="big">찾아오시는 길</h2></div><div class="route-grid reveal">
+<section class="invite story-chapter" id="invitation"><div class="container story-content"><div class="reveal"><div class="section-label">01 / THE INVITATION</div><h2 class="big">우리의 이야기가<br>전시회로 완성됩니다.</h2><p class="message">학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간.<br><br>2026년 11월 13일, 경인여자대학교 컴퓨터소프트웨어학과의 3학년 캡스톤디자인 전시회와 2학년 창의작품 전시회에 여러분을 초대합니다.</p></div><div class="card reveal"><div class="section-label">YOU ARE INVITED · 2026</div><h3 class="card-title">Capstone<br>Design<br>Exhibition</h3><p class="message" style="font-size:14px">Dept. of Computer Software<br>경인여자대학교 컴퓨터소프트웨어학과</p><a class="section-next reveal" href="#details" aria-label="다음 섹션 전시회 안내 보기"><span><small>CONTINUE THE STORY · 02</small>전시회 안내 살펴보기</span><span class="next-arrow" aria-hidden="true">↓</span></a></div></section>
+<section class="details story-chapter" id="details"><div class="container story-content"><div class="reveal"><div class="section-label">02 / EXHIBITION INFO</div><h2 class="big">전시회 안내</h2><p class="message">2026년 11월 13일 금요일, 학생들의 결과물을 만나보세요.</p></div><div class="detailgrid"><div class="tile reveal"><small>01 · DATE</small><p><b>2026. 11. 13. (금)</b></p></div><div class="tile reveal"><small>02 · TIME</small><p><b>10:00 – 17:00</b></p></div><div class="tile reveal"><small>03 · PLACE</small><p>경인여자대학교<br><b>본관 3층 · 307호 / 308호</b></p></div></div><div class="exhibitions reveal"><article class="exhibit"><div class="exhibit-badge">3학년 · 본관 308호</div><h3>캡스톤디자인 전시회</h3><p>3학년 학생들이 완성한 작품을 직접 전시합니다.</p></article><article class="exhibit"><div class="exhibit-badge">2학년 · 본관 307호</div><h3>창의작품 전시회</h3><p>2학년 학생들의 작품 기획 내용을 PPT 형식의 패널로 전시합니다.</p></article><a class="section-next reveal" href="#way" aria-label="다음 섹션 찾아오시는 길 보기"><span><small>CONTINUE THE STORY · 03</small>찾아오시는 길 확인하기</span><span class="next-arrow" aria-hidden="true">↓</span></a></div></section>
+<section class="way story-guide" id="way"><div class="container"><div class="reveal"><div class="section-label">03 / FIND THE VENUE</div><h2 class="big">찾아오시는 길</h2></div><div class="route-grid reveal">
   <article class="route-card">
     <div class="route-top"><span class="route-no">01 / CAMPUS</span><span class="route-chip">학교 위치</span></div>
     <h3>경인여자대학교</h3><p class="route-caption">인천광역시 계양구 계양산로 63</p>
@@ -92,6 +114,33 @@ html{scroll-snap-type:none!important;scroll-padding-top:0}
 function update(){const max=document.documentElement.scrollHeight-innerHeight;line.style.width=(max?scrollY/max*100:0)+'%';const box=experience.getBoundingClientRect(),distance=experience.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-box.top/Math.max(1,distance)));percent.textContent=String(Math.round(p*100)).padStart(2,'0')+'%';lines.forEach((el,i)=>el.classList.toggle('on',p>(i+1)*.105));output.classList.toggle('on',p>.69);transform.classList.toggle('visible',p>.83);transform.style.opacity=String(Math.min(1,Math.max(0,(p-.76)/.15)));transform.style.transform='scale('+String(.96+.04*Math.min(1,Math.max(0,(p-.76)/.15)))+')';hint.textContent=p>.83?'초대장이 완성되었습니다. 계속 내려보세요 ↓':p>.69?'초대장을 생성하고 있습니다…':'스크롤하면 코드가 완성됩니다 ↓';ticking=false}
 addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});addEventListener('resize',update);update();
 const io=new IntersectionObserver(items=>items.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
+
+// v5: movement is computed from real scroll position, so reversing scroll reverses the animation.
+const chapters=[...document.querySelectorAll('.story-chapter')];
+const guide=document.querySelector('.story-guide');
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const ease=x=>{x=clamp(x);return x*x*(3-2*x)};
+let storyScheduled=false;
+function paintStory(){
+ storyScheduled=false;
+ if(reduceMotion.matches){chapters.forEach(ch=>{ch.style.setProperty('--story-y','0px');ch.style.setProperty('--story-opacity','1')});if(guide){guide.style.setProperty('--guide-y','0px');guide.style.setProperty('--guide-opacity','1')}return}
+ const vh=innerHeight;
+ chapters.forEach(ch=>{
+   const r=ch.getBoundingClientRect();
+   // Incoming from below until chapter begins filling viewport.
+   const arriving=ease((vh*1.02-r.top)/(vh*.72));
+   // Depart upward gradually; preserves the center reading area.
+   const leaving=ease((vh*.8-r.bottom)/(vh*.64));
+   const dy=(1-arriving)*Math.min(vh*.29,220)-leaving*Math.min(vh*.25,180);
+   const alpha=clamp(.16+.84*arriving-.72*leaving,.12,1);
+   ch.style.setProperty('--story-y',dy.toFixed(1)+'px');
+   ch.style.setProperty('--story-opacity',alpha.toFixed(3));
+ });
+ if(guide){let r=guide.getBoundingClientRect();let arrival=ease((vh*.99-r.top)/(vh*.62));guide.style.setProperty('--guide-y',((1-arrival)*Math.min(vh*.16,110)).toFixed(1)+'px');guide.style.setProperty('--guide-opacity',(0.35+0.65*arrival).toFixed(3))}
+}
+function storyScroll(){if(!storyScheduled){storyScheduled=true;requestAnimationFrame(paintStory)}}
+addEventListener('scroll',storyScroll,{passive:true});addEventListener('resize',storyScroll);paintStory();
 
 })();
 </script></body></html>
