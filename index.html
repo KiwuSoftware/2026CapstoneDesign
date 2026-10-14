@@ -151,7 +151,7 @@ body::before{background:radial-gradient(ellipse at 94% 10%,rgba(255,194,137,.25)
 .hero.poster-hero{font-weight:950;letter-spacing:-.067em;line-height:.93;margin:24px 0 15px;font-size:clamp(46px,10vw,112px)}
 .hero.poster-hero span{display:block!important;width:fit-content!important;max-width:100%;background:var(--sunset)!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;transform:none!important}
 .hero.poster-hero .hero-year{margin-bottom:.22em;font-size:1.14em}
-.hero-sub{font-size:clamp(12px,2vw,23px);color:#e45b32;text-align:right;font-weight:500;margin-top:10px}
+.hero-sub{font-size:clamp(12px,2vw,23px);color:#e45b32;text-align:left;font-weight:500;margin-top:10px}
 .hero-korean{font-size:clamp(23px,4.8vw,43px)!important;font-weight:860!important;color:#9c512c!important;margin:35px 0 12px!important;line-height:1.3!important;letter-spacing:-.055em}
 .hero-venue{font-size:clamp(13px,2.2vw,17px)!important;color:#564137!important;line-height:1.85!important}
 .arrow{color:#bb432a!important}
@@ -235,7 +235,7 @@ html{scroll-snap-type:none!important;scroll-behavior:auto}body{background:#fffaf
 .stage-scene .exhibit-badge{background:#fff0e5;color:#b85432}.stage-scene .exhibit p{color:#745c50}
 .stage-progress{position:absolute;z-index:4;bottom:19px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;pointer-events:none}
 .stage-progress span{width:6px;height:6px;border-radius:50%;background:#e7c9ba;transition:width .25s,background .25s}.stage-progress span.on{width:28px;border-radius:6px;background:#e94c28}
-.stage-hint{position:absolute;bottom:41px;width:100%;text-align:center;font-size:11px;letter-spacing:.03em;color:#a36e58;pointer-events:none;z-index:4}
+.stage-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);width:22px;height:18px;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:4;color:#a36e58;opacity:.9}.stage-hint.hidden{opacity:0}.stage-hint .hint-chevrons{position:relative;width:16px;height:12px;display:block;animation:hintNudge 1.55s ease-in-out infinite}.stage-hint .hint-chevrons:before,.stage-hint .hint-chevrons:after{content:"";position:absolute;left:50%;width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;border-radius:1px;transform-origin:center}.stage-hint .hint-chevrons:before{top:0;transform:translateX(-50%) rotate(45deg)}.stage-hint .hint-chevrons:after{top:4px;transform:translateX(-50%) rotate(45deg);opacity:.95}@keyframes hintNudge{0%,100%{transform:translateY(0);opacity:.82}50%{transform:translateY(4px);opacity:1}}
 
 .substep{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
 .substep.show{opacity:1;transform:none;pointer-events:auto}
@@ -365,28 +365,136 @@ body{overflow:hidden;touch-action:none}
 .stage-scene[data-scene="info"] .detailgrid.sub-info-basic .tile.revealed{opacity:1!important;transform:none!important}
 
 /* v12.2: legacy reveal must not hide staged invitation/ticket contents */
-.stage-scene[data-scene="message"] > div,.stage-scene[data-scene="ticket"] > div{opacity:1;visibility:visible;}
-</style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="4" href="#pinned-story">전시 정보</a><a data-scene-target="6" href="#pinned-story">오시는 길 ↗</a></div></header>
+.stage-scene[data-scene="invitation"] > div{opacity:1;visibility:visible;}
+
+/* v12.3: combine invitation copy + ticket into a single vertical ticket page */
+.stage-scene[data-scene="invitation"]{width:min(780px,calc(100% - 28px))}
+.invitation-wrap{display:flex;justify-content:center}
+.invite-vertical-ticket{position:relative;width:min(430px,100%);background:#fffdfb;border:1px solid #efd6c8;border-radius:28px;box-shadow:0 18px 44px rgba(196,96,46,.09);overflow:hidden}
+.invite-vertical-ticket:before{content:"";position:absolute;width:210px;height:210px;right:-95px;top:-85px;border-radius:50%;background:#f5eadf}
+.ticket-topzone,.ticket-bottomzone{position:relative;padding:28px 26px}
+.ticket-topzone{padding-bottom:26px;min-height:58%}
+.ticket-bottomzone{padding-top:24px;background:linear-gradient(180deg,rgba(255,248,243,.55),#fffdfb)}
+.ticket-cutline{position:relative;height:22px;display:flex;align-items:center;justify-content:center}
+.ticket-cutline:before{content:"";position:absolute;left:26px;right:26px;top:50%;border-top:2px dashed #e6c8b8;transform:translateY(-50%)}
+.cut-notch{position:absolute;top:50%;width:28px;height:28px;border-radius:50%;background:#faf4ef;border:1px solid #efd6c8;transform:translateY(-50%)}
+.cut-notch.left{left:-14px}.cut-notch.right{right:-14px}
+.invite-big{margin:18px 0 0;font-size:clamp(33px,8vw,56px);line-height:1.04;letter-spacing:-.07em;color:#a4462d}
+.invite-copy{margin-top:22px;font-size:15px;line-height:1.85;color:#70584c}
+.ticket-display-title{margin:8px 0 0;font-size:clamp(30px,9vw,54px);line-height:.97;letter-spacing:-.065em;background:linear-gradient(95deg,#da143d 0%,#ee4b1f 52%,#f7a11a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ticket-meta{margin:22px 0 0;font-size:14px;line-height:1.7;color:#7b655a}.ticket-meta strong{color:#a85835}
+.invite-vertical-ticket .section-label.small{font-size:10px;letter-spacing:2px}
+@media (max-width:620px){.invite-vertical-ticket{width:min(390px,100%)}.ticket-topzone,.ticket-bottomzone{padding:24px 22px}.invite-big{font-size:clamp(27px,10vw,47px)}.invite-copy{font-size:14px;line-height:1.78}.ticket-display-title{font-size:clamp(28px,11vw,48px)}}
+
+/* v12.3: exhibition info on a single page */
+.stage-scene[data-scene="info"]{width:min(880px,calc(100% - 28px))}
+.info-onepage .message{max-width:700px}
+.info-onepage .detailgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:24px}
+.info-onepage .tile{min-height:150px}
+.info-onepage .exhibitions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.info-onepage .tile,.info-onepage .exhibit{opacity:1!important;transform:none!important}
+@media (max-width:760px){.info-onepage .detailgrid,.info-onepage .exhibitions{grid-template-columns:1fr}.info-onepage .tile{min-height:auto}}
+
+
+/* v12.4: exhibition info stays on one page but reveals in 2 steps */
+.info-onepage .detailgrid{opacity:1;transform:none;transition:opacity .45s ease,transform .45s ease}
+.info-onepage .exhibitions{opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .45s ease,transform .45s ease;margin-top:16px}
+.info-onepage .exhibitions.show{opacity:1;transform:none;pointer-events:auto}
+.info-onepage .detailgrid .tile,.info-onepage .exhibitions .exhibit{opacity:1!important;transform:none!important}
+
+
+/* v12.5 request-applied */
+.hero-sub{text-align:left!important}
+.stage-scene[data-scene="invitation"]{width:min(760px,calc(100% - 28px))}
+.invitation-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.invite-outside-label{align-self:flex-start;margin-left:max(2px,calc((100% - min(430px,100%))/2));}
+.invite-vertical-ticket{position:relative;width:min(430px,100%);background:#fffdfb;border:1px solid #efd6c8;border-radius:28px;box-shadow:0 18px 44px rgba(196,96,46,.09);overflow:hidden}
+.invite-vertical-ticket:before{content:"";position:absolute;width:210px;height:210px;right:-95px;top:-85px;border-radius:50%;background:#f5eadf}
+.ticket-topzone,.ticket-bottomzone{position:relative;padding:26px 26px}
+.ticket-topzone{padding-bottom:22px}
+.ticket-display-title{margin:0;font-size:clamp(30px,9vw,54px);line-height:.97;letter-spacing:-.065em;background:linear-gradient(95deg,#da143d 0%,#ee4b1f 52%,#f7a11a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ticket-meta{margin:16px 0 0;font-size:14px;line-height:1.7;color:#7b655a;text-align:left}.ticket-meta strong{color:#a85835}
+.invite-big{margin:24px 0 0;font-size:clamp(28px,6.2vw,44px);line-height:1.06;letter-spacing:-.065em;color:#a4462d}
+.invite-copy{margin-top:18px;font-size:15px;line-height:1.82;color:#70584c}
+.ticket-cutline{position:relative;height:24px;display:flex;align-items:center;justify-content:center}
+.ticket-cutline:before{content:"";position:absolute;left:26px;right:26px;top:50%;border-top:2px dashed #e6c8b8;transform:translateY(-50%)}
+.cut-notch{position:absolute;top:50%;width:28px;height:28px;border-radius:50%;background:#faf4ef;border:1px solid #efd6c8;transform:translateY(-50%)}
+.cut-notch.left{left:-14px}.cut-notch.right{right:-14px}
+.barcode-zone{padding:20px 18px 24px;background:linear-gradient(180deg,rgba(255,248,243,.55),#fffdfb)}
+.barcode-wrap{position:relative;height:64px;width:100%;max-width:100%;margin:0 auto;border-radius:2px;background:
+    repeating-linear-gradient(90deg,
+      #b38a74 0px, #b38a74 1px, transparent 1px, transparent 2px,
+      #b38a74 2px, #b38a74 3px, transparent 3px, transparent 5px,
+      #b38a74 5px, #b38a74 6px, transparent 6px, transparent 7px,
+      #b38a74 7px, #b38a74 9px, transparent 9px, transparent 11px,
+      #b38a74 11px, #b38a74 12px, transparent 12px, transparent 14px,
+      #b38a74 14px, #b38a74 15px, transparent 15px, transparent 16px,
+      #b38a74 16px, #b38a74 18px, transparent 18px, transparent 20px,
+      #b38a74 20px, #b38a74 21px, transparent 21px, transparent 23px
+    );background-size:24px 100%;background-repeat:repeat-x;opacity:.95}
+.barcode-wrap span{display:none}
+.barcode-wrap span.thin,.barcode-wrap span.wide{display:none}
+.barcode-number{margin-top:12px;text-align:center;font-size:11px;letter-spacing:3px;color:#b38a74;opacity:.9}
+.stage-scene[data-scene="info"]{width:min(880px,calc(100% - 28px))}
+.info-onepage .message{max-width:700px}
+.info-onepage .detailgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:0;max-height:0;overflow:hidden;opacity:0;transform:translateY(16px);pointer-events:none;transition:max-height .55s ease,margin-top .55s ease,opacity .45s ease,transform .45s ease}
+.info-onepage .detailgrid.show{margin-top:24px;max-height:520px;opacity:1;transform:none;pointer-events:auto}
+.info-onepage .exhibitions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:0;max-height:0;overflow:hidden;opacity:0;transform:translateY(16px);pointer-events:none;transition:max-height .55s ease,margin-top .55s ease,opacity .45s ease,transform .45s ease}
+.info-onepage .exhibitions.show{margin-top:16px;max-height:520px;opacity:1;transform:none;pointer-events:auto}
+.info-onepage .tile,.info-onepage .exhibit{opacity:1!important;transform:none!important}
+.stage-scene[data-scene="venue"] .sub-venue-campus,.stage-scene[data-scene="venue"] .sub-venue-building{display:block;opacity:0;transform:translateY(20px);max-height:0;overflow:hidden;pointer-events:none;transition:opacity .5s ease,transform .5s ease,max-height .5s ease,margin .5s ease}
+.stage-scene[data-scene="venue"] .sub-venue-campus.show,.stage-scene[data-scene="venue"] .sub-venue-building.show{opacity:1;transform:none;max-height:1400px;pointer-events:auto}
+@media (max-width:760px){.info-onepage .detailgrid,.info-onepage .exhibitions{grid-template-columns:1fr}.info-onepage .tile{min-height:auto}}
+@media (max-width:620px){
+  .invite-outside-label{margin-left:0;align-self:flex-start}
+  .invite-vertical-ticket{width:min(390px,100%)}
+  .ticket-topzone,.ticket-bottomzone{padding:24px 22px}
+  .ticket-display-title{font-size:clamp(28px,11vw,48px)}
+  .invite-big{font-size:clamp(24px,8.7vw,39px)}
+  .invite-copy{font-size:14px;line-height:1.78}
+}
+
+
+@media (max-width:760px){.info-onepage .detailgrid.show{max-height:900px}.info-onepage .exhibitions.show{max-height:700px}}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="3" href="#pinned-story">전시 정보</a><a data-scene-target="4" href="#pinned-story">오시는 길 ↗</a></div></header>
 <section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
-<div aria-label="message" class="stage-scene" data-scene="message" role="group"><div class=""><div class="section-label">01 / THE INVITATION</div><h2 class="big">우리의 이야기가<br/>전시회로 완성됩니다.</h2><p class="message">학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간.<br/><br/>2026년 11월 13일, 경인여자대학교 컴퓨터소프트웨어학과의 3학년 캡스톤디자인 전시회와 2학년 창의작품 전시회에 여러분을 초대합니다.</p></div></div>
-<div aria-label="ticket" class="stage-scene" data-scene="ticket" role="group"><div class="card invite-ticket"><span aria-hidden="true" class="ticket-notch left"></span><span aria-hidden="true" class="ticket-notch right"></span><div class="section-label">YOU ARE INVITED · 2026</div><h3 class="card-title">2026<br/>Capstone<br/>Design &amp;<br/>Creative<br/>Exhibition</h3><p class="message">Dept. of Computer Software<br/>경인여자대학교 컴퓨터소프트웨어학과<br/><strong style="color:#b15c34">컴퓨터소프트웨어학과 전시회</strong></p></div></div>
+<div aria-label="invitation ticket" class="stage-scene" data-scene="invitation" role="group">
+<div class="invitation-wrap">
+<div class="section-label invite-outside-label">01 / THE INVITATION</div>
+<article class="invite-vertical-ticket">
+<div class="ticket-topzone">
+<h3 class="ticket-display-title">2026<br/>Capstone<br/>Design &amp;<br/>Creative<br/>Exhibition</h3>
+<h2 class="invite-big">우리의 이야기가<br/>전시회로 완성됩니다.</h2>
+<p class="invite-copy">학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간.<br/><br/>2026년 11월 13일, 경인여자대학교 컴퓨터소프트웨어학과의 3학년 캡스톤디자인 전시회와 2학년 창의작품 전시회에 여러분을 초대합니다.</p>
+</div>
+<div aria-hidden="true" class="ticket-cutline">
+<span class="cut-notch left"></span>
+<span class="cut-notch right"></span>
+</div>
+<div class="ticket-bottomzone barcode-zone" aria-hidden="true">
+<div class="barcode-wrap">
+<span></span><span></span><span class="thin"></span><span></span><span class="wide"></span><span class="thin"></span><span></span><span></span><span class="wide"></span><span></span><span class="thin"></span><span></span><span></span><span class="wide"></span><span></span><span class="thin"></span><span></span><span class="wide"></span><span></span><span></span><span class="thin"></span><span></span>
+</div>
+<div class="barcode-number">2026 1113 307 308</div>
+</div>
+</article>
+</div>
+</div>
 <div aria-label="전시회 안내" class="stage-scene" data-scene="info" role="group">
-<div>
+<div class="info-onepage">
 <div class="section-label">02 / EXHIBITION INFO</div>
 <h2 class="big">전시회 안내</h2>
 <p class="message">2026년 11월 13일 금요일, 학생들의 결과물과 아이디어가 작품이 되는 순간을 만나보세요.</p>
-<div class="detailgrid substep sub-info-basic stagger">
-<div class="tile"><small>01 · DATE</small><p><b>2026. 11. 13. (금)</b></p></div>
-<div class="tile"><small>02 · TIME</small><p><b>10:00 – 18:00</b></p></div>
-<div class="tile"><small>03 · PLACE</small><p>경인여자대학교<br/><b>본관 3층 · 307호 / 308호</b></p></div>
+<div class="detailgrid info-static-grid">
+<div class="tile revealed"><small>01 · DATE</small><p><b>2026. 11. 13. (금)</b></p></div>
+<div class="tile revealed"><small>02 · TIME</small><p><b>10:00 – 18:00</b></p></div>
+<div class="tile revealed"><small>03 · PLACE</small><p>경인여자대학교<br/><b>본관 3층 · 307호 / 308호</b></p></div>
 </div>
-<div class="substep sub-info-exhibitions">
-<h3 class="subheading">두 개의 전시, 하나의 가능성.</h3>
-<div class="exhibitions stagger">
-<article class="exhibit"><div class="exhibit-badge">3학년 · 본관 308호</div><h3>캡스톤디자인 전시회</h3><p>3학년 학생들이 완성한 작품을 직접 전시합니다.</p></article>
-<article class="exhibit"><div class="exhibit-badge">2학년 · 본관 307호</div><h3>창의작품 전시회</h3><p>2학년 학생들의 작품 기획 내용을 PPT 형식의 패널로 전시합니다.</p></article>
-</div>
+<div class="exhibitions info-static-exhibitions">
+<article class="exhibit revealed"><div class="exhibit-badge">3학년 · 본관 308호</div><h3>캡스톤디자인 전시회</h3><p>3년동안 배운 모든 것을 활용하여 하나의 완성된 작품을 제작하여 전시합니다.</p></article>
+<article class="exhibit revealed"><div class="exhibit-badge">2학년 · 본관 307호</div><h3>창의작품 전시회</h3><p>창의적인 아이디어를 통하여 작품 기획 단계의 내용을 전시합니다.</p></article>
 </div>
 </div>
 </div>
@@ -396,7 +504,7 @@ body{overflow:hidden;touch-action:none}
 <div class="route-top"><span class="route-no">01 / CAMPUS</span><span class="route-chip">학교 위치</span></div>
 <h3>경인여자대학교</h3><p class="route-caption">인천광역시 계양구 계양산로 63</p>
 <div class="mini-map"><img alt="경인여자대학교 주변 위치 약도" decoding="async" loading="lazy" src="campus-map.png"/></div>
-<a class="route-link" href="https://map.naver.com/p/search/%EA%B2%BD%EC%9D%B8%EC%97%AC%EC%9E%90%EB%8C%80%ED%95%99%EA%B5%90" rel="noopener noreferrer" target="_blank">네이버 지도에서 위치 보기 <span aria-hidden="true">↗</span></a>
+<a class="route-link" href="https://naver.me/5PWB8wsw" rel="noopener noreferrer" target="_blank">네이버 지도에서 위치 보기 <span aria-hidden="true">↗</span></a>
 </article>
 <article class="route-card compact-route substep sub-venue-building">
 <div class="route-top"><span class="route-no">02 / DETAIL LOCATION</span><span class="route-chip">자세한 위치</span></div>
@@ -412,7 +520,7 @@ body{overflow:hidden;touch-action:none}
 <div class="closing-meta">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 307호 / 308호</div>
 </div>
 <div class="stage-hint">한 번 스와이프하면 다음 내용이 나타납니다 ↓</div>
-<div aria-hidden="true" class="stage-progress"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></section>
+<div aria-hidden="true" class="stage-progress"><span></span><span></span><span></span><span></span><span></span><span></span></div></div></section>
 <script>
 (()=>{
 'use strict';
@@ -420,19 +528,28 @@ const scenes=[...document.querySelectorAll('.stage-scene')];
 const dots=[...document.querySelectorAll('.stage-progress span')];
 const progressbar=document.querySelector('#scrollline');
 const hint=document.querySelector('.stage-hint');
+if(hint) hint.innerHTML='<span class="hint-chevrons" aria-hidden="true"></span><span class="sr-only">Scroll</span>'; 
 const lines=[...document.querySelectorAll('[data-scene="code"] .line')];
 const output=document.querySelector('[data-scene="code"] .output');
 const percent=document.querySelector('#percent');
 const infoGrid=document.querySelector('[data-scene="info"] .detailgrid');
-const tiles=[...document.querySelectorAll('[data-scene="info"] .detailgrid .tile')];
-const exhibitContainer=document.querySelector('.sub-info-exhibitions');
-const exhibits=[...document.querySelectorAll('.sub-info-exhibitions .exhibit')];
+const infoExhibitions=document.querySelector('[data-scene="info"] .exhibitions');
 const campus=document.querySelector('.sub-venue-campus');
 const building=document.querySelector('.sub-venue-building');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sceneNames=['hero','code','message','ticket','info','venue','closing'];
-const steps=[{scene:0},{scene:1},{scene:2},{scene:3},{scene:4,info:0},{scene:4,info:1},{scene:4,info:2},{scene:4,info:3},{scene:4,info:4},{scene:4,info:5},{scene:5,venue:0},{scene:5,venue:1},{scene:5,venue:2},{scene:6}];
-const saveKey='capstone2026-v12-step';
+const steps=[
+  {scene:0},
+  {scene:1},
+  {scene:2},
+  {scene:3,info:0},
+  {scene:3,info:1},
+  {scene:3,info:2},
+  {scene:4,venue:0},
+  {scene:4,venue:1},
+  {scene:4,venue:2},
+  {scene:5}
+];
+const saveKey='capstone2026-v125-step';
 let index=0,locked=false,wheelDelta=0,wheelStamp=0,touchY=null,touchX=null;
 let codeGeneration=0; let oldScene=-1;
 try{const nav=performance.getEntriesByType('navigation')[0];if(nav?.type==='reload')index=Math.max(0,Math.min(steps.length-1,Number(sessionStorage.getItem(saveKey))||0));}catch(e){}
@@ -442,8 +559,7 @@ function updateCode(auto){
  output?.classList.remove('on');if(percent)percent.textContent='00%';
  if(!auto){lines.forEach(l=>l.classList.add('on'));output?.classList.add('on');if(percent)percent.textContent='100%';return;}
  locked=true;
- // One swipe shows the entire snippet automatically, line by line.
- const delay=reduce?25:140;
+ const delay=reduce?25:125;
  lines.forEach((line,i)=>setTimeout(()=>{if(codeGeneration!==generation)return;line.classList.add('on');if(percent)percent.textContent=String(Math.round((i+1)/(lines.length+1)*100)).padStart(2,'0')+'%';},delay*(i+1)));
  setTimeout(()=>{if(codeGeneration!==generation)return;output?.classList.add('on');if(percent)percent.textContent='100%';},delay*(lines.length+1));
  setTimeout(()=>{if(codeGeneration===generation)locked=false;},delay*(lines.length+1)+(reduce?40:420));
@@ -454,37 +570,31 @@ function render(initial=false){
   const active=i===scene;
   el.classList.toggle('active',active);
   if(active)el.classList.remove('departing');
-  else if(i===oldScene && i!==scene){el.classList.add('departing');setTimeout(()=>el.classList.remove('departing'),720);}
-  else el.classList.remove('departing');
+  else if(i===oldScene && i!==scene){el.classList.add('departing');setTimeout(()=>el.classList.remove('departing'),720);} else el.classList.remove('departing');
   el.setAttribute('aria-hidden',String(!active));
  });
  if(scene===1 && (oldScene!==1 || initial)) updateCode(!initial);
- else if(oldScene===1 && scene!==1)codeGeneration++;
- const phase=scene===4?step.info:-1;
- const showTiles=phase>=0 && phase<=3;
- if(infoGrid){infoGrid.classList.toggle('hidden-for-exhibits',phase>=4);infoGrid.classList.toggle('show',phase>=1&&phase<=3);}
- tiles.forEach((el,i)=>el.classList.toggle('revealed',showTiles&&i<phase));
- if(exhibitContainer)exhibitContainer.classList.toggle('show',phase>=4);
- exhibits.forEach((el,i)=>el.classList.toggle('revealed',phase>=4&&i<phase-3));
- if(campus)campus.classList.toggle('show',scene===5&&step.venue===1);
- if(building)building.classList.toggle('show',scene===5&&step.venue===2);
+ else if(oldScene===1 && scene!==1) codeGeneration++;
+ if(infoGrid) infoGrid.classList.toggle('show', scene===3 && step.info>=1);
+ if(infoExhibitions) infoExhibitions.classList.toggle('show', scene===3 && step.info>=2);
+ if(campus) campus.classList.toggle('show',scene===4 && step.venue>=1);
+ if(building) building.classList.toggle('show',scene===4 && step.venue>=2);
  dots.forEach((el,i)=>el.classList.toggle('on',i===scene));
- if(progressbar)progressbar.style.width=(index/(steps.length-1)*100)+'%';
- if(hint)hint.textContent=scene===1?'코드가 완성되면 한 번 더 스크롤하세요 ↓':index===steps.length-1?'전시회에서 만나요!':'스크롤 한 번에 다음 내용이 나타납니다 ↓';
+ if(progressbar) progressbar.style.width=(index/(steps.length-1)*100)+'%';
+ if(hint){
+   hint.classList.toggle('hidden', index===steps.length-1);
+ }
  try{sessionStorage.setItem(saveKey,String(index));}catch(e){}
  oldScene=scene;
 }
 function stepTo(n){
- if(locked||n===index)return;
+ if(locked||n===index) return;
  const before=steps[index],target=steps[n];
- index=n;
- locked=true;
- render();
- // Keep the transition fluid but prevent a single fling from skipping content.
- if(target.scene!==1 || before.scene===1) setTimeout(()=>{locked=false;},reduce?80:620);
+ index=n; locked=true; render();
+ if(target.scene!==1 || before.scene===1) setTimeout(()=>{locked=false;}, reduce?80:620);
 }
-function advance(direction){stepTo(Math.max(0,Math.min(steps.length-1,index+direction)));}
-function onWheel(e){if(e.ctrlKey)return;e.preventDefault();const now=performance.now();if(now-wheelStamp>230)wheelDelta=0;wheelStamp=now;wheelDelta+=e.deltaY;if(Math.abs(wheelDelta)>36){const d=Math.sign(wheelDelta);wheelDelta=0;advance(d);}}
+function advance(direction){ stepTo(Math.max(0, Math.min(steps.length-1, index+direction))); }
+function onWheel(e){ if(e.ctrlKey) return; e.preventDefault(); const now=performance.now(); if(now-wheelStamp>230) wheelDelta=0; wheelStamp=now; wheelDelta+=e.deltaY; if(Math.abs(wheelDelta)>36){ const d=Math.sign(wheelDelta); wheelDelta=0; advance(d); } }
 document.addEventListener('wheel',onWheel,{passive:false});
 document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;touchY=e.touches[0].clientY;touchX=e.touches[0].clientX;},{passive:true});
 document.addEventListener('touchmove',e=>{if(touchY!==null&&e.cancelable)e.preventDefault()},{passive:false});
