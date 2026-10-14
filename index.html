@@ -457,6 +457,54 @@ body{overflow:hidden;touch-action:none}
 
 @media (max-width:760px){.info-onepage .detailgrid.show{max-height:900px}.info-onepage .exhibitions.show{max-height:700px}}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* v12.13: Location cards occupy one screen, never stack together. */
+.stage-scene[data-scene="venue"] .sub-venue-campus,
+.stage-scene[data-scene="venue"] .sub-venue-building{
+  display:none!important;
+  opacity:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  transform:translateY(14px)!important;
+  pointer-events:none!important;
+}
+.stage-scene[data-scene="venue"] .sub-venue-campus.show,
+.stage-scene[data-scene="venue"] .sub-venue-building.show{
+  display:block!important;
+  opacity:1!important;
+  transform:none!important;
+  pointer-events:auto!important;
+  animation:venueCardEnter .58s cubic-bezier(.2,.72,.26,1) both;
+}
+@keyframes venueCardEnter{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.stage-scene[data-scene="venue"] .mini-map img,
+.stage-scene[data-scene="venue"] .building-diagram img{
+  display:block;width:100%;height:auto;max-height:min(37dvh,370px);object-fit:contain;
+}
+.stage-scene[data-scene="venue"] .route-card{max-width:min(650px,100%);margin:16px auto 0}
+.stage-scene[data-scene="venue"] .route-link{padding:11px 14px;min-height:40px;margin-top:10px}
+.stage-scene[data-scene="venue"] .route-card .route-caption{line-height:1.45}
+@media(max-width:620px){
+  .stage-scene[data-scene="venue"] .big{font-size:clamp(29px,7.5vw,39px)!important;margin:8px 0 12px!important}
+  .stage-scene[data-scene="venue"] .mini-map img,
+  .stage-scene[data-scene="venue"] .building-diagram img{max-height:min(36dvh,310px)!important}
+  .stage-scene[data-scene="venue"] .route-card{margin-top:12px!important}
+  .stage-scene[data-scene="venue"] .room-pair>div{padding:8px}
+  .stage-scene[data-scene="venue"] .room-pair strong{font-size:16px}
+}
+@media(max-height:720px){
+ .stage-scene[data-scene="venue"] .mini-map img,
+ .stage-scene[data-scene="venue"] .building-diagram img{max-height:32dvh!important}
+ .stage-scene[data-scene="venue"] .route-card h3{margin:5px 0!important}
+ .stage-scene[data-scene="venue"] .route-card{padding:10px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .stage-scene[data-scene="venue"] .sub-venue-campus.show,
+ .stage-scene[data-scene="venue"] .sub-venue-building.show{animation:none}
+}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="3" href="#pinned-story">전시 정보</a><a data-scene-target="4" href="#pinned-story">오시는 길 ↗</a></div></header>
 <section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
@@ -504,7 +552,7 @@ body{overflow:hidden;touch-action:none}
 <div class="route-top"><span class="route-no">01 / CAMPUS</span><span class="route-chip">학교 위치</span></div>
 <h3>경인여자대학교</h3><p class="route-caption">인천광역시 계양구 계양산로 63</p>
 <div class="mini-map"><img alt="경인여자대학교 주변 위치 약도" decoding="async" loading="lazy" src="campus-map.png"/></div>
-<a class="route-link" href="https://map.naver.com/p/search/%EA%B2%BD%EC%9D%B8%EC%97%AC%EC%9E%90%EB%8C%80%ED%95%99%EA%B5%90" rel="noopener noreferrer" target="_blank">네이버 지도에서 위치 보기 <span aria-hidden="true">↗</span></a>
+<a class="route-link" href="https://naver.me/5PWB8wsw" rel="noopener noreferrer" target="_blank">네이버 지도에서 위치 보기 <span aria-hidden="true">↗</span></a>
 </article>
 <article class="route-card compact-route substep sub-venue-building">
 <div class="route-top"><span class="route-no">02 / DETAIL LOCATION</span><span class="route-chip">자세한 위치</span></div>
@@ -577,8 +625,8 @@ function render(initial=false){
  else if(oldScene===1 && scene!==1) codeGeneration++;
  if(infoGrid) infoGrid.classList.toggle('show', scene===3 && step.info>=1);
  if(infoExhibitions) infoExhibitions.classList.toggle('show', scene===3 && step.info>=2);
- if(campus) campus.classList.toggle('show',scene===4 && step.venue>=1);
- if(building) building.classList.toggle('show',scene===4 && step.venue>=2);
+ if(campus) campus.classList.toggle('show',scene===4 && step.venue===1);
+ if(building) building.classList.toggle('show',scene===4 && step.venue===2);
  dots.forEach((el,i)=>el.classList.toggle('on',i===scene));
  if(progressbar) progressbar.style.width=(index/(steps.length-1)*100)+'%';
  if(hint){
