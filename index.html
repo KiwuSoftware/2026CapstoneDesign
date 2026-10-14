@@ -50,6 +50,31 @@
  .reveal{transform:translateY(18px);transition-duration:.65s}
 }
 @media(prefers-reduced-motion:reduce){.section-next .next-arrow{transition:none}}
+
+/* v3 — chapter-paced mobile scrolling: actual snap points, not extra whitespace */
+html{scroll-snap-type:y proximity;scroll-padding-top:55px;overscroll-behavior-y:auto}
+#home,#invitation,#details,#way,#closing{scroll-snap-align:start;scroll-snap-stop:normal;scroll-margin-top:55px}
+#experience{scroll-snap-align:start;scroll-margin-top:0}
+#invitation,#details{min-height:100svh;display:flex;align-items:center}
+#invitation>.container,#details>.container{width:100%}
+#closing{min-height:85svh;display:flex;align-items:center;justify-content:center}
+#closing>.container{width:100%}
+/* A clear chapter label makes each reading section feel independent. */
+#invitation::after,#details::after,#way::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:1px;width:min(85%,800px);background:linear-gradient(90deg,transparent,#9ecde8,transparent)}
+#invitation .container,#details .container,#way .container{transition:filter .45s ease}
+/* Long maps must remain freely scrollable rather than snap their cards. */
+.route-card,.tile,.exhibit{scroll-snap-align:none}
+@media(max-width:720px){
+ html{scroll-snap-type:y mandatory;scroll-padding-top:54px}
+ #home,#invitation,#details,#way,#closing{scroll-snap-stop:normal}
+ #invitation{padding-top:110px;padding-bottom:115px}
+ #details{padding-top:95px;padding-bottom:105px}
+ #way{padding-top:90px;padding-bottom:110px}
+ #closing{min-height:100svh}
+ .section-next{background:linear-gradient(110deg,#e0f2ff,#f2faff);border:1px solid #c6e5f7;border-radius:16px;padding:15px 17px;box-shadow:0 7px 20px #186c9f0d}
+ .section-next .next-arrow{background:#0d7bb8;color:white;border-radius:50%;width:38px;height:38px;flex-shrink:0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a href="#details">전시 정보</a><a href="#way">오시는 길 ↗</a></div></header>
 <section class="intro" id="home"><div class="intro-inner"><div class="eyebrow">2026 GRADUATION EXHIBITION</div><h1 class="hero"><span>Beyond</span><span>the Code.</span></h1><p>코드 너머, 우리의 가능성을 만나다.<br>경인여자대학교 컴퓨터소프트웨어학과 3학년 캡스톤디자인 · 2학년 창의작품 전시회</p><div class="arrow">아래로 스크롤해 초대장을 완성하세요 ↓</div></div></section>
 <section class="code-stage" id="experience"><div class="sticky"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div><div class="transform" id="transform"><div class="transform-inner"><div class="eyebrow">COMPILED SUCCESSFULLY</div><h2>YOU ARE<br>INVITED.</h2><p>2026 CAPSTONE DESIGN EXHIBITION</p></div></div></div></section>
@@ -74,7 +99,7 @@
 <section class="end" id="closing"><div class="container"><div class="section-label" style="color:#a7e4ff">04 / SEE YOU THERE</div><h2>전시회에서 만나요!</h2><p>코드로 시작된 이야기를 직접 만나보세요.<br>소중한 분들과 이 초대장을 함께 나눠주세요.</p><div class="actions"><a class="action" href="https://map.naver.com/p/search/%EA%B2%BD%EC%9D%B8%EC%97%AC%EC%9E%90%EB%8C%80%ED%95%99%EA%B5%90" target="_blank" rel="noopener">학교 위치 확인 ↗</a><button class="action dark" id="share">초대장 공유</button><a class="action dark" href="#way">상세 길 안내 ↑</a><a class="action dark" href="#home">처음부터 다시 보기 ↑</a></div><p class="notice">디자인 임시 적용 · 행사 정보 제공 / 로컬 테스트 파일 · 공유 링크 기능은 정식 배포 후 사용 가능</p></div></section>
 <script>
 (()=>{const experience=document.querySelector('#experience'),lines=[...document.querySelectorAll('.line')],output=document.querySelector('#output'),transform=document.querySelector('#transform'),percent=document.querySelector('#percent'),hint=document.querySelector('#hint'),line=document.querySelector('#scrollline');let ticking=false;
-function update(){const max=document.documentElement.scrollHeight-innerHeight;line.style.width=(max?scrollY/max*100:0)+'%';const box=experience.getBoundingClientRect(),distance=experience.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-box.top/Math.max(1,distance)));percent.textContent=String(Math.round(p*100)).padStart(2,'0')+'%';lines.forEach((el,i)=>el.classList.toggle('on',p>(i+1)*.105));output.classList.toggle('on',p>.69);transform.classList.toggle('visible',p>.83);hint.textContent=p>.83?'초대장이 완성되었습니다. 계속 내려보세요 ↓':p>.69?'초대장을 생성하고 있습니다…':'스크롤하면 코드가 완성됩니다 ↓';ticking=false}
+function update(){const max=document.documentElement.scrollHeight-innerHeight;line.style.width=(max?scrollY/max*100:0)+'%';const box=experience.getBoundingClientRect(),distance=experience.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-box.top/Math.max(1,distance)));percent.textContent=String(Math.round(p*100)).padStart(2,'0')+'%';lines.forEach((el,i)=>el.classList.toggle('on',p>(i+1)*.105));output.classList.toggle('on',p>.69);transform.classList.toggle('visible',p>.83);transform.style.opacity=String(Math.min(1,Math.max(0,(p-.76)/.15)));transform.style.transform='scale('+String(.96+.04*Math.min(1,Math.max(0,(p-.76)/.15)))+')';hint.textContent=p>.83?'초대장이 완성되었습니다. 계속 내려보세요 ↓':p>.69?'초대장을 생성하고 있습니다…':'스크롤하면 코드가 완성됩니다 ↓';ticking=false}
 addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});addEventListener('resize',update);update();
 const io=new IntersectionObserver(items=>items.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
 document.querySelector('#share').addEventListener('click',async()=>{if(location.protocol==='file:'){alert('지금은 로컬 테스트 파일입니다. 실제 웹에 게시하면 공유 링크를 사용할 수 있어요.');return}const data={title:'2026 컴퓨터소프트웨어학과 졸업전시회',text:'졸업작품 전시회에 초대합니다!',url:location.href};try{if(navigator.share)await navigator.share(data);else if(navigator.clipboard){await navigator.clipboard.writeText(location.href);alert('초대장 링크를 복사했어요.')}else prompt('링크를 복사해 주세요',location.href)}catch(e){if(e.name!=='AbortError')alert('공유를 완료하지 못했습니다.')}});
