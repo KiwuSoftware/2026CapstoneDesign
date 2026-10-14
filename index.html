@@ -349,6 +349,19 @@ body{overflow:hidden;touch-action:none}
 .stage-scene[data-scene="code"] .line{transition:opacity .35s ease,transform .35s ease!important}
 .stage-scene[data-scene="code"] .line.on{opacity:1!important;transform:translateY(0)!important}
 @media(prefers-reduced-motion:reduce){.stage-scene,.stage-scene.active,.stage-scene.departing,.stage-scene .line{transition:none!important}}
+
+/* v12.1: guarantee code contrast on dark editor */
+.stage-scene[data-scene="code"] .frame .editor{color:#e4edf8!important}
+.stage-scene[data-scene="code"] .frame .editor .line{color:#dce8fa!important}
+.stage-scene[data-scene="code"] .frame .editor .comment{color:#79dbe1!important}
+.stage-scene[data-scene="code"] .frame .editor .purple{color:#d4b6ff!important}
+.stage-scene[data-scene="code"] .frame .editor .green{color:#9df0c1!important}
+.stage-scene[data-scene="code"] .frame .editor .gold{color:#ffdb9a!important}
+.stage-scene[data-scene="code"] .frame .editor .output{color:#a6f3cb!important}
+/* Show the detail wrapper as well as each detail card. */
+.stage-scene[data-scene="info"] .detailgrid.sub-info-basic.show{opacity:1!important;transform:none!important;visibility:visible!important}
+.stage-scene[data-scene="info"] .detailgrid.sub-info-basic.show .tile{visibility:visible!important}
+.stage-scene[data-scene="info"] .detailgrid.sub-info-basic .tile.revealed{opacity:1!important;transform:none!important}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="4" href="#pinned-story">전시 정보</a><a data-scene-target="6" href="#pinned-story">오시는 길 ↗</a></div></header>
 <section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
@@ -447,7 +460,7 @@ function render(initial=false){
  else if(oldScene===1 && scene!==1)codeGeneration++;
  const phase=scene===4?step.info:-1;
  const showTiles=phase>=0 && phase<=3;
- if(infoGrid)infoGrid.classList.toggle('hidden-for-exhibits',phase>=4);
+ if(infoGrid){infoGrid.classList.toggle('hidden-for-exhibits',phase>=4);infoGrid.classList.toggle('show',phase>=1&&phase<=3);}
  tiles.forEach((el,i)=>el.classList.toggle('revealed',showTiles&&i<phase));
  if(exhibitContainer)exhibitContainer.classList.toggle('show',phase>=4);
  exhibits.forEach((el,i)=>el.classList.toggle('revealed',phase>=4&&i<phase-3));
