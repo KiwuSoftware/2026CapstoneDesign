@@ -328,6 +328,27 @@ body{overflow:hidden;touch-action:none}
  .stage-scene[data-scene="code"] .editor{height:min(50dvh,400px)}
 }
 @media(prefers-reduced-motion:reduce){.stage-scene,.substep,.stage-scene .line{transition:none!important}}
+
+/* v12: gesture-stepped, fluid scene transitions */
+.stage-scene{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translate3d(-50%,calc(-50% + 55px),0)!important;transition:opacity .62s cubic-bezier(.22,.72,.2,1),transform .68s cubic-bezier(.22,.72,.2,1),visibility 0s linear .68s!important;}
+.stage-scene.active{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:translate3d(-50%,-50%,0)!important;transition:opacity .62s cubic-bezier(.22,.72,.2,1),transform .68s cubic-bezier(.22,.72,.2,1),visibility 0s!important;}
+.stage-scene.departing{opacity:0!important;visibility:visible!important;pointer-events:none!important;transform:translate3d(-50%,calc(-50% - 55px),0)!important}
+.stage-scene[data-scene="info"] .detailgrid,
+.stage-scene[data-scene="info"] .sub-info-exhibitions{display:grid!important;transition:opacity .4s ease,transform .45s ease!important}
+.stage-scene[data-scene="info"] .detailgrid.hidden-for-exhibits{display:none!important}
+.stage-scene[data-scene="info"] .sub-info-exhibitions:not(.show){display:none!important}
+.stage-scene[data-scene="info"] .sub-info-exhibitions.show{display:block!important}
+.stage-scene[data-scene="info"] .detailgrid .tile,
+.stage-scene[data-scene="info"] .sub-info-exhibitions .exhibit{transition:opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1)!important}
+.stage-scene[data-scene="info"] .detailgrid .tile.revealed,
+.stage-scene[data-scene="info"] .sub-info-exhibitions .exhibit.revealed{opacity:1!important;transform:translateY(0)!important}
+.stage-scene[data-scene="venue"] .sub-venue-campus,
+.stage-scene[data-scene="venue"] .sub-venue-building{transition:opacity .5s ease,transform .55s ease!important}
+.stage-scene[data-scene="venue"] .sub-venue-campus.show,
+.stage-scene[data-scene="venue"] .sub-venue-building.show{opacity:1!important;transform:none!important}
+.stage-scene[data-scene="code"] .line{transition:opacity .35s ease,transform .35s ease!important}
+.stage-scene[data-scene="code"] .line.on{opacity:1!important;transform:translateY(0)!important}
+@media(prefers-reduced-motion:reduce){.stage-scene,.stage-scene.active,.stage-scene.departing,.stage-scene .line{transition:none!important}}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="4" href="#pinned-story">전시 정보</a><a data-scene-target="6" href="#pinned-story">오시는 길 ↗</a></div></header>
 <section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
@@ -380,98 +401,83 @@ body{overflow:hidden;touch-action:none}
 <script>
 (()=>{
 'use strict';
-const stage=document.querySelector('#pinned-story');
 const scenes=[...document.querySelectorAll('.stage-scene')];
-const progressbar=document.querySelector('#scrollline');
 const dots=[...document.querySelectorAll('.stage-progress span')];
+const progressbar=document.querySelector('#scrollline');
 const hint=document.querySelector('.stage-hint');
 const lines=[...document.querySelectorAll('[data-scene="code"] .line')];
 const output=document.querySelector('[data-scene="code"] .output');
 const percent=document.querySelector('#percent');
-const infoTiles=[...document.querySelectorAll('[data-scene="info"] .detailgrid .tile')];
 const infoGrid=document.querySelector('[data-scene="info"] .detailgrid');
+const tiles=[...document.querySelectorAll('[data-scene="info"] .detailgrid .tile')];
 const exhibitContainer=document.querySelector('.sub-info-exhibitions');
 const exhibits=[...document.querySelectorAll('.sub-info-exhibitions .exhibit')];
-const venueCampus=document.querySelector('.sub-venue-campus');
-const venueBuilding=document.querySelector('.sub-venue-building');
-const names=['hero','code','message','ticket','info','venue','closing'];
-// Steps explicitly enumerate the progress inside long scenes.
-const steps=[{scene:0},{scene:1,code:0},...lines.map((_,i)=>({scene:1,code:i+1})),{scene:1,code:lines.length+1},{scene:2},{scene:3},{scene:4,info:0},{scene:4,info:1},{scene:4,info:2},{scene:4,info:3},{scene:4,info:4},{scene:4,info:5},{scene:5,venue:0},{scene:5,venue:1},{scene:5,venue:2},{scene:6}];
-let current=0,lastMotion=0,lockUntil=0,wheelAccum=0,wheelReset=0,startY=null,startX=null;
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const savedKey='capstone2026-v11-step';
-try{const nav=performance.getEntriesByType('navigation')[0];if(nav&&nav.type==='reload')current=Math.max(0,Math.min(steps.length-1,Number(sessionStorage.getItem(savedKey))||0));}catch(e){}
-function render(){
- const step=steps[current];
+const campus=document.querySelector('.sub-venue-campus');
+const building=document.querySelector('.sub-venue-building');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sceneNames=['hero','code','message','ticket','info','venue','closing'];
+const steps=[{scene:0},{scene:1},{scene:2},{scene:3},{scene:4,info:0},{scene:4,info:1},{scene:4,info:2},{scene:4,info:3},{scene:4,info:4},{scene:4,info:5},{scene:5,venue:0},{scene:5,venue:1},{scene:5,venue:2},{scene:6}];
+const saveKey='capstone2026-v12-step';
+let index=0,locked=false,wheelDelta=0,wheelStamp=0,touchY=null,touchX=null;
+let codeGeneration=0; let oldScene=-1;
+try{const nav=performance.getEntriesByType('navigation')[0];if(nav?.type==='reload')index=Math.max(0,Math.min(steps.length-1,Number(sessionStorage.getItem(saveKey))||0));}catch(e){}
+function updateCode(auto){
+ codeGeneration++;const generation=codeGeneration;
+ lines.forEach(l=>l.classList.remove('on'));
+ output?.classList.remove('on');if(percent)percent.textContent='00%';
+ if(!auto){lines.forEach(l=>l.classList.add('on'));output?.classList.add('on');if(percent)percent.textContent='100%';return;}
+ locked=true;
+ // One swipe shows the entire snippet automatically, line by line.
+ const delay=reduce?25:140;
+ lines.forEach((line,i)=>setTimeout(()=>{if(codeGeneration!==generation)return;line.classList.add('on');if(percent)percent.textContent=String(Math.round((i+1)/(lines.length+1)*100)).padStart(2,'0')+'%';},delay*(i+1)));
+ setTimeout(()=>{if(codeGeneration!==generation)return;output?.classList.add('on');if(percent)percent.textContent='100%';},delay*(lines.length+1));
+ setTimeout(()=>{if(codeGeneration===generation)locked=false;},delay*(lines.length+1)+(reduce?40:420));
+}
+function render(initial=false){
+ const step=steps[index],scene=step.scene;
  scenes.forEach((el,i)=>{
-   const visible=i===step.scene;
-   el.classList.toggle('active',visible);
-   el.setAttribute('aria-hidden',String(!visible));
-   el.style.opacity=visible?'1':'0';
-   el.style.visibility=visible?'visible':'hidden';
-   el.style.pointerEvents=visible?'auto':'none';
-   el.style.transform=`translate3d(-50%,calc(-50% + ${visible?'0':i<step.scene?'-48':'48'}px),0)`;
+  const active=i===scene;
+  el.classList.toggle('active',active);
+  if(active)el.classList.remove('departing');
+  else if(i===oldScene && i!==scene){el.classList.add('departing');setTimeout(()=>el.classList.remove('departing'),720);}
+  else el.classList.remove('departing');
+  el.setAttribute('aria-hidden',String(!active));
  });
- let codeCount=step.scene===1?(step.code||0):0;
- lines.forEach((line,i)=>line.classList.toggle('on',i<codeCount));
- if(output)output.classList.toggle('on',step.scene===1&&codeCount>lines.length);
- if(percent)percent.textContent=(step.scene===1?Math.round(codeCount/(lines.length+1)*100):0)+'%';
- const info=step.scene===4?step.info:-1;
- const basic=info>=0&&info<=3;
- if(infoGrid)infoGrid.classList.toggle('hidden-for-exhibits',info>=4);
- infoTiles.forEach((el,i)=>el.classList.toggle('revealed',basic&&i<info));
- if(exhibitContainer)exhibitContainer.classList.toggle('show',info>=4);
- exhibits.forEach((el,i)=>el.classList.toggle('revealed',info>=4&&i<(info-3)));
- const venue=step.scene===5?step.venue:-1;
- if(venueCampus)venueCampus.classList.toggle('show',venue===1);
- if(venueBuilding)venueBuilding.classList.toggle('show',venue===2);
- dots.forEach((d,i)=>d.classList.toggle('on',i===step.scene));
- if(progressbar)progressbar.style.width=((current/(steps.length-1))*100)+'%';
- if(hint)hint.textContent=current===steps.length-1?'전시회에서 만나요!':(step.scene===1?'한 번 스와이프할 때마다 코드가 완성됩니다 ↓':'한 번 스와이프하면 다음 내용이 나타납니다 ↓');
- try{sessionStorage.setItem(savedKey,String(current));}catch(e){}
+ if(scene===1 && (oldScene!==1 || initial)) updateCode(!initial);
+ else if(oldScene===1 && scene!==1)codeGeneration++;
+ const phase=scene===4?step.info:-1;
+ const showTiles=phase>=0 && phase<=3;
+ if(infoGrid)infoGrid.classList.toggle('hidden-for-exhibits',phase>=4);
+ tiles.forEach((el,i)=>el.classList.toggle('revealed',showTiles&&i<phase));
+ if(exhibitContainer)exhibitContainer.classList.toggle('show',phase>=4);
+ exhibits.forEach((el,i)=>el.classList.toggle('revealed',phase>=4&&i<phase-3));
+ if(campus)campus.classList.toggle('show',scene===5&&step.venue===1);
+ if(building)building.classList.toggle('show',scene===5&&step.venue===2);
+ dots.forEach((el,i)=>el.classList.toggle('on',i===scene));
+ if(progressbar)progressbar.style.width=(index/(steps.length-1)*100)+'%';
+ if(hint)hint.textContent=scene===1?'코드가 완성되면 한 번 더 스크롤하세요 ↓':index===steps.length-1?'전시회에서 만나요!':'스크롤 한 번에 다음 내용이 나타납니다 ↓';
+ try{sessionStorage.setItem(saveKey,String(index));}catch(e){}
+ oldScene=scene;
 }
-function go(direction){
- const now=Date.now();
- if(now<lockUntil)return;
- const target=Math.max(0,Math.min(steps.length-1,current+direction));
- if(target===current)return;
- current=target;
- lockUntil=now+(reduced?220:580);
+function stepTo(n){
+ if(locked||n===index)return;
+ const before=steps[index],target=steps[n];
+ index=n;
+ locked=true;
  render();
+ // Keep the transition fluid but prevent a single fling from skipping content.
+ if(target.scene!==1 || before.scene===1) setTimeout(()=>{locked=false;},reduce?80:620);
 }
-function setIndex(index){current=Math.max(0,Math.min(steps.length-1,index));lockUntil=Date.now()+300;render();}
-function onWheel(e){
- if(e.ctrlKey)return;
- e.preventDefault();
- const now=Date.now();
- if(now-wheelReset>220)wheelAccum=0;
- wheelReset=now;
- wheelAccum+=e.deltaY;
- if(Math.abs(wheelAccum)>36){go(Math.sign(wheelAccum));wheelAccum=0;}
-}
+function advance(direction){stepTo(Math.max(0,Math.min(steps.length-1,index+direction)));}
+function onWheel(e){if(e.ctrlKey)return;e.preventDefault();const now=performance.now();if(now-wheelStamp>230)wheelDelta=0;wheelStamp=now;wheelDelta+=e.deltaY;if(Math.abs(wheelDelta)>36){const d=Math.sign(wheelDelta);wheelDelta=0;advance(d);}}
 document.addEventListener('wheel',onWheel,{passive:false});
-document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startY=e.touches[0].clientY;startX=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchmove',e=>{if(startY!==null&&e.cancelable)e.preventDefault();},{passive:false});
-document.addEventListener('touchend',e=>{
- if(startY===null||!e.changedTouches.length)return;
- const dy=e.changedTouches[0].clientY-startY;
- const dx=e.changedTouches[0].clientX-startX;
- startY=null;startX=null;
- if(Math.abs(dy)>32&&Math.abs(dy)>Math.abs(dx)*1.12)go(dy<0?1:-1);
-},{passive:true});
-document.addEventListener('touchcancel',()=>{startY=null;startX=null;},{passive:true});
-document.addEventListener('keydown',e=>{
- if(e.target.closest('input,textarea,select,[contenteditable]'))return;
- if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){e.preventDefault();go(1);}
- if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();go(-1);}
- if(e.key==='Home'){e.preventDefault();setIndex(0);}
- if(e.key==='End'){e.preventDefault();setIndex(steps.length-1);}
-});
-document.querySelectorAll('[data-scene-target]').forEach(a=>a.addEventListener('click',e=>{
- e.preventDefault();const dest=Number(a.dataset.sceneTarget);
- const index=steps.findIndex(s=>s.scene===dest);if(index>=0)setIndex(index);
-}));
-render();
+document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;touchY=e.touches[0].clientY;touchX=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchmove',e=>{if(touchY!==null&&e.cancelable)e.preventDefault()},{passive:false});
+document.addEventListener('touchend',e=>{if(touchY===null||!e.changedTouches.length)return;const dy=e.changedTouches[0].clientY-touchY,dx=e.changedTouches[0].clientX-touchX;touchY=null;touchX=null;if(Math.abs(dy)>30&&Math.abs(dy)>Math.abs(dx)*1.1)advance(dy<0?1:-1);},{passive:true});
+document.addEventListener('touchcancel',()=>{touchY=null;touchX=null;});
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select,[contenteditable]'))return;if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){e.preventDefault();advance(1);}else if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();advance(-1);}else if(e.key==='Home'){e.preventDefault();stepTo(0);}else if(e.key==='End'){e.preventDefault();stepTo(steps.length-1);}});
+document.querySelectorAll('[data-scene-target]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const scene=Number(a.dataset.sceneTarget),found=steps.findIndex(s=>s.scene===scene);if(found>=0)stepTo(found);}));
+render(true);
 })();
 </script>
 </body></html>
