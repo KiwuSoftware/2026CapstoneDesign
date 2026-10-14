@@ -281,6 +281,53 @@ html{scroll-snap-type:none!important;scroll-behavior:auto}body{background:#fffaf
 .closing-meta{margin:35px auto 0;border-top:1px solid #ecc5b1;padding-top:20px;color:#9c5d43;font-size:13px;line-height:1.9}
 @media(max-width:620px){.stage{height:1120svh!important}.stage-scene[data-scene="campus"],.stage-scene[data-scene="building"]{max-height:calc(100dvh - 112px)}.stage-scene .compact-route{padding:12px}.stage-scene .compact-route .mini-map img,.stage-scene .compact-route .building-diagram img{max-height:33dvh}.stage-scene .compact-route .room-pair span{font-size:10px}}
 @media(max-height:630px){.stage-scene .compact-route .mini-map img,.stage-scene .compact-route .building-diagram img{max-height:28dvh}}
+
+/* v11: one finger gesture = one discrete content reveal */
+html,body{height:100%;overscroll-behavior:none}
+body{overflow:hidden;touch-action:none}
+.stage{height:100dvh!important;min-height:100svh!important}
+.stage-sticky{position:relative!important;top:0;height:100dvh!important;touch-action:none}
+.stage-scene{overflow:visible!important;max-height:none!important;touch-action:none!important;user-select:none!important;-webkit-user-select:none!important;transition:opacity .43s cubic-bezier(.2,.7,.2,1),transform .43s cubic-bezier(.2,.7,.2,1)!important}
+.stage-scene a,.stage-scene button{touch-action:manipulation!important;user-select:auto!important}
+.stage-scene .line{transition:opacity .35s ease,transform .35s ease}
+.stage-scene .substep{transition:opacity .35s ease,transform .35s ease}
+.stage-scene[data-scene="info"] .detailgrid{display:grid;gap:10px}
+.stage-scene[data-scene="info"] .detailgrid .tile{opacity:0;transform:translateY(14px);transition:opacity .4s,transform .4s}
+.stage-scene[data-scene="info"] .detailgrid .tile.revealed{opacity:1;transform:none}
+.stage-scene[data-scene="info"] .sub-info-exhibitions{display:none}
+.stage-scene[data-scene="info"] .sub-info-exhibitions.show{display:block}
+.stage-scene[data-scene="info"] .sub-info-exhibitions .exhibit{opacity:0;transform:translateY(14px);transition:opacity .4s,transform .4s}
+.stage-scene[data-scene="info"] .sub-info-exhibitions .exhibit.revealed{opacity:1;transform:none}
+.stage-scene[data-scene="info"] .detailgrid.hidden-for-exhibits{display:none}
+.stage-scene[data-scene="venue"] .sub-venue-campus,.stage-scene[data-scene="venue"] .sub-venue-building{display:none;opacity:0;transform:translateY(14px)}
+.stage-scene[data-scene="venue"] .sub-venue-campus.show,.stage-scene[data-scene="venue"] .sub-venue-building.show{display:block;opacity:1;transform:none}
+.stage-scene[data-scene="venue"] .mini-map img,.stage-scene[data-scene="venue"] .building-diagram img{width:100%;height:auto;max-height:min(45dvh,370px);object-fit:contain}
+.stage-scene[data-scene="venue"] .route-card{margin:12px auto 0;padding:clamp(12px,2vw,18px)}
+.stage-scene[data-scene="venue"] .route-card h3{font-size:clamp(20px,4vw,28px);margin:9px 0 5px}
+.stage-scene[data-scene="venue"] .route-caption{margin-bottom:9px}
+.stage-scene[data-scene="venue"] .room-pair{margin-top:7px}
+.stage-hint{bottom:43px}
+@media(max-width:620px){
+ .stage-scene{max-height:calc(100dvh - 110px)!important;overflow:visible!important}
+ .stage-scene[data-scene="info"] .big,.stage-scene[data-scene="venue"] .big{font-size:clamp(30px,8vw,42px);margin:9px 0}
+ .stage-scene[data-scene="info"] .message{font-size:14px;line-height:1.6}
+ .stage-scene[data-scene="info"] .tile{padding:10px 15px;min-height:0}
+ .stage-scene[data-scene="info"] .tile p{margin:6px 0;font-size:13px}
+ .stage-scene[data-scene="info"] .detailgrid{gap:6px;margin-top:10px}
+ .stage-scene[data-scene="info"] .exhibitions{display:grid;grid-template-columns:1fr;gap:8px}
+ .stage-scene[data-scene="info"] .exhibit{padding:13px 16px}
+ .stage-scene[data-scene="info"] .exhibit h3{font-size:18px;margin:8px 0}
+ .stage-scene[data-scene="info"] .exhibit p{font-size:13px;line-height:1.5}
+ .stage-scene[data-scene="info"] .subheading{font-size:21px;margin:12px 0 6px}
+ .stage-scene[data-scene="venue"] .route-card{padding:12px}
+ .stage-scene[data-scene="venue"] .mini-map img,.stage-scene[data-scene="venue"] .building-diagram img{max-height:min(37dvh,300px)}
+ .stage-scene[data-scene="venue"] .route-link{padding:10px 12px;min-height:38px;margin-top:7px}
+ .stage-scene[data-scene="venue"] .room-pair small{font-size:9px}
+ .stage-scene[data-scene="venue"] .room-pair strong{font-size:20px}
+ .stage-scene[data-scene="venue"] .room-pair span{font-size:10px}
+ .stage-scene[data-scene="code"] .editor{height:min(50dvh,400px)}
+}
+@media(prefers-reduced-motion:reduce){.stage-scene,.substep,.stage-scene .line{transition:none!important}}
 </style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="4" href="#pinned-story">전시 정보</a><a data-scene-target="6" href="#pinned-story">오시는 길 ↗</a></div></header>
 <section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
@@ -328,101 +375,103 @@ html{scroll-snap-type:none!important;scroll-behavior:auto}body{background:#fffaf
 <p>아이디어에서 작품으로 이어진 우리의 이야기를 만나보세요.<br/>소중한 분들과 이 초대장을 함께 나눠주세요.</p>
 <div class="closing-meta">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 307호 / 308호</div>
 </div>
-<div class="stage-hint">스크롤하면 다음 장면이 나타납니다 ↓</div>
+<div class="stage-hint">한 번 스와이프하면 다음 내용이 나타납니다 ↓</div>
 <div aria-hidden="true" class="stage-progress"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></section>
 <script>
 (()=>{
- const stage=document.querySelector('#pinned-story');
- const scenes=[...document.querySelectorAll('.stage-scene')];
- const dots=[...document.querySelectorAll('.stage-progress span')];
- const progressbar=document.querySelector('#scrollline');
- const lines=[...document.querySelectorAll('.stage-scene[data-scene="code"] .line')];
- const codeOutput=document.querySelector('.stage-scene[data-scene="code"] .output');
- const codePercent=document.querySelector('#percent');
- const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
- const smoother=x=>x*x*(3-2*x);
- const weights=[1,1.6,1,1,1.55,1.65,1];
- const starts=[]; let totalWeight=0;
- weights.forEach(w=>{starts.push(totalWeight); totalWeight+=w;});
- function updateStageHeight(){stage.style.height=Math.round(window.innerHeight*(totalWeight+0.4))+'px';}
- function sceneLocal(units,i){return clamp((units-starts[i])/weights[i],0,1);}
- function sceneVisibility(units,i){
-   const start=starts[i], end=start+weights[i];
-   const enter=Math.min(.18*weights[i], .22);
-   const exit=Math.min(.18*weights[i], .22);
-   if(i===0){
-      if(units < start) return 1;
-      if(units <= end-exit) return 1;
-      if(units < end) return 1-smoother((units-(end-exit))/exit);
-      return 0;
-   }
-   if(i===scenes.length-1){
-      if(units < start-enter) return 0;
-      if(units < start) return smoother((units-(start-enter))/enter);
-      return 1;
-   }
-   if(units < start-enter || units > end) return 0;
-   if(units < start) return smoother((units-(start-enter))/enter);
-   if(units <= end-exit) return 1;
-   return 1-smoother((units-(end-exit))/exit);
- }
- function setGroupShow(sel, on){document.querySelectorAll(sel).forEach(el=>{el.classList.toggle('show',on); if(el.classList.contains('stagger')) el.classList.toggle('show',on);});}
- function render(){
-   const total=Math.max(1,stage.offsetHeight-innerHeight);
-   const rect=stage.getBoundingClientRect();
-   const p=clamp(-rect.top/total,0,1);
-   const units=p*totalWeight;
-   scenes.forEach((el,i)=>{
-      const visibility=clamp(sceneVisibility(units,i),0,1);
-      const local=sceneLocal(units,i);
-      const coming=units<starts[i];
-      const offset=reduce?0:coming?72*(1-visibility):-68*(1-visibility);
-      el.style.opacity=visibility.toFixed(4);
-      el.style.transform=`translate3d(-50%,calc(-50% + ${offset.toFixed(2)}px),0)`;
-      const active=visibility>.02;
-      el.classList.toggle('active',active);
-      el.setAttribute('aria-hidden',String(!active));
-      el.style.pointerEvents=active?'auto':'none';
-      if(el.dataset.scene==='code'){
-         const progress=clamp(local/.92,0,1);
-         lines.forEach((line,idx)=>line.classList.toggle('on', progress>(idx+1)/(lines.length+1.8)));
-         if(codeOutput) codeOutput.classList.toggle('on', progress>.9);
-         if(codePercent) codePercent.textContent=String(Math.round(progress*100)).padStart(2,'0')+'%';
-      }
-      if(el.dataset.scene==='info'){
-         const info1=local>.22, info2=local>.58;
-         setGroupShow('.sub-info-basic', info1);
-         setGroupShow('.sub-info-basic.stagger', info1);
-         setGroupShow('.sub-info-exhibitions', info2);
-         document.querySelectorAll('.sub-info-exhibitions .stagger').forEach(x=>x.classList.toggle('show',info2));
-      }
-      if(el.dataset.scene==='venue'){
-         const v1=local>.18, v2=local>.58;
-         setGroupShow('.sub-venue-campus', v1);
-         setGroupShow('.sub-venue-building', v2);
-      }
-   });
-   let current=0;
-   starts.forEach((s,i)=>{ if(units>=s) current=i; });
-   current=clamp(current,0,dots.length-1);
-   dots.forEach((el,i)=>el.classList.toggle('on',i===current));
-   const max=document.documentElement.scrollHeight-innerHeight;
-   if(progressbar) progressbar.style.width=(max?scrollY/max*100:0)+'%';
- }
- function request(){requestAnimationFrame(render)}
- addEventListener('scroll',request,{passive:true});
- addEventListener('resize',()=>{updateStageHeight();request();});
- addEventListener('pageshow',()=>{updateStageHeight();request();});
- document.querySelectorAll('[data-scene-target]').forEach(a=>a.addEventListener('click',e=>{
-   e.preventDefault();
-   const i=Number(a.dataset.sceneTarget)||0;
-   const target=starts[Math.min(i, starts.length-1)]/totalWeight;
-   const y=stage.offsetTop+(stage.offsetHeight-innerHeight)*target;
-   scrollTo({top:y,behavior:reduce?'instant':'smooth'});
- }));
- updateStageHeight();
+'use strict';
+const stage=document.querySelector('#pinned-story');
+const scenes=[...document.querySelectorAll('.stage-scene')];
+const progressbar=document.querySelector('#scrollline');
+const dots=[...document.querySelectorAll('.stage-progress span')];
+const hint=document.querySelector('.stage-hint');
+const lines=[...document.querySelectorAll('[data-scene="code"] .line')];
+const output=document.querySelector('[data-scene="code"] .output');
+const percent=document.querySelector('#percent');
+const infoTiles=[...document.querySelectorAll('[data-scene="info"] .detailgrid .tile')];
+const infoGrid=document.querySelector('[data-scene="info"] .detailgrid');
+const exhibitContainer=document.querySelector('.sub-info-exhibitions');
+const exhibits=[...document.querySelectorAll('.sub-info-exhibitions .exhibit')];
+const venueCampus=document.querySelector('.sub-venue-campus');
+const venueBuilding=document.querySelector('.sub-venue-building');
+const names=['hero','code','message','ticket','info','venue','closing'];
+// Steps explicitly enumerate the progress inside long scenes.
+const steps=[{scene:0},{scene:1,code:0},...lines.map((_,i)=>({scene:1,code:i+1})),{scene:1,code:lines.length+1},{scene:2},{scene:3},{scene:4,info:0},{scene:4,info:1},{scene:4,info:2},{scene:4,info:3},{scene:4,info:4},{scene:4,info:5},{scene:5,venue:0},{scene:5,venue:1},{scene:5,venue:2},{scene:6}];
+let current=0,lastMotion=0,lockUntil=0,wheelAccum=0,wheelReset=0,startY=null,startX=null;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const savedKey='capstone2026-v11-step';
+try{const nav=performance.getEntriesByType('navigation')[0];if(nav&&nav.type==='reload')current=Math.max(0,Math.min(steps.length-1,Number(sessionStorage.getItem(savedKey))||0));}catch(e){}
+function render(){
+ const step=steps[current];
+ scenes.forEach((el,i)=>{
+   const visible=i===step.scene;
+   el.classList.toggle('active',visible);
+   el.setAttribute('aria-hidden',String(!visible));
+   el.style.opacity=visible?'1':'0';
+   el.style.visibility=visible?'visible':'hidden';
+   el.style.pointerEvents=visible?'auto':'none';
+   el.style.transform=`translate3d(-50%,calc(-50% + ${visible?'0':i<step.scene?'-48':'48'}px),0)`;
+ });
+ let codeCount=step.scene===1?(step.code||0):0;
+ lines.forEach((line,i)=>line.classList.toggle('on',i<codeCount));
+ if(output)output.classList.toggle('on',step.scene===1&&codeCount>lines.length);
+ if(percent)percent.textContent=(step.scene===1?Math.round(codeCount/(lines.length+1)*100):0)+'%';
+ const info=step.scene===4?step.info:-1;
+ const basic=info>=0&&info<=3;
+ if(infoGrid)infoGrid.classList.toggle('hidden-for-exhibits',info>=4);
+ infoTiles.forEach((el,i)=>el.classList.toggle('revealed',basic&&i<info));
+ if(exhibitContainer)exhibitContainer.classList.toggle('show',info>=4);
+ exhibits.forEach((el,i)=>el.classList.toggle('revealed',info>=4&&i<(info-3)));
+ const venue=step.scene===5?step.venue:-1;
+ if(venueCampus)venueCampus.classList.toggle('show',venue===1);
+ if(venueBuilding)venueBuilding.classList.toggle('show',venue===2);
+ dots.forEach((d,i)=>d.classList.toggle('on',i===step.scene));
+ if(progressbar)progressbar.style.width=((current/(steps.length-1))*100)+'%';
+ if(hint)hint.textContent=current===steps.length-1?'전시회에서 만나요!':(step.scene===1?'한 번 스와이프할 때마다 코드가 완성됩니다 ↓':'한 번 스와이프하면 다음 내용이 나타납니다 ↓');
+ try{sessionStorage.setItem(savedKey,String(current));}catch(e){}
+}
+function go(direction){
+ const now=Date.now();
+ if(now<lockUntil)return;
+ const target=Math.max(0,Math.min(steps.length-1,current+direction));
+ if(target===current)return;
+ current=target;
+ lockUntil=now+(reduced?220:580);
  render();
+}
+function setIndex(index){current=Math.max(0,Math.min(steps.length-1,index));lockUntil=Date.now()+300;render();}
+function onWheel(e){
+ if(e.ctrlKey)return;
+ e.preventDefault();
+ const now=Date.now();
+ if(now-wheelReset>220)wheelAccum=0;
+ wheelReset=now;
+ wheelAccum+=e.deltaY;
+ if(Math.abs(wheelAccum)>36){go(Math.sign(wheelAccum));wheelAccum=0;}
+}
+document.addEventListener('wheel',onWheel,{passive:false});
+document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startY=e.touches[0].clientY;startX=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchmove',e=>{if(startY!==null&&e.cancelable)e.preventDefault();},{passive:false});
+document.addEventListener('touchend',e=>{
+ if(startY===null||!e.changedTouches.length)return;
+ const dy=e.changedTouches[0].clientY-startY;
+ const dx=e.changedTouches[0].clientX-startX;
+ startY=null;startX=null;
+ if(Math.abs(dy)>32&&Math.abs(dy)>Math.abs(dx)*1.12)go(dy<0?1:-1);
+},{passive:true});
+document.addEventListener('touchcancel',()=>{startY=null;startX=null;},{passive:true});
+document.addEventListener('keydown',e=>{
+ if(e.target.closest('input,textarea,select,[contenteditable]'))return;
+ if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){e.preventDefault();go(1);}
+ if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();go(-1);}
+ if(e.key==='Home'){e.preventDefault();setIndex(0);}
+ if(e.key==='End'){e.preventDefault();setIndex(steps.length-1);}
+});
+document.querySelectorAll('[data-scene-target]').forEach(a=>a.addEventListener('click',e=>{
+ e.preventDefault();const dest=Number(a.dataset.sceneTarget);
+ const index=steps.findIndex(s=>s.scene===dest);if(index>=0)setIndex(index);
+}));
+render();
 })();
 </script>
 </body></html>
