@@ -148,9 +148,30 @@ body::before{background:radial-gradient(ellipse at 94% 10%,rgba(255,194,137,.25)
 .intro::before{background:radial-gradient(circle at 93% 40%,rgba(255,139,43,.12),transparent 55%)!important}
 .intro-inner{max-width:900px!important}
 .eyebrow,.section-label{color:#bc432e!important;letter-spacing:2.3px}
-.hero.poster-hero{font-weight:950;letter-spacing:-.067em;line-height:.93;margin:24px 0 15px;font-size:clamp(46px,10vw,112px)}
-.hero.poster-hero span{display:block!important;width:fit-content!important;max-width:100%;background:var(--sunset)!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;transform:none!important}
-.hero.poster-hero .hero-year{margin-bottom:.22em;font-size:1.14em}
+.hero.poster-hero{
+  font-weight:950;
+  letter-spacing:-.067em;
+  line-height:1.08;
+  margin:24px 0 15px;
+  font-size:clamp(38px, min(7vw, 9vh), 90px);
+}
+.hero.poster-hero span{
+  display:block!important;
+  width:fit-content!important;
+  max-width:100%;
+
+  background:var(--sunset)!important;
+  background-clip:text!important;
+  -webkit-background-clip:text!important;
+
+  color:transparent!important;
+  transform:none!important;
+  padding-bottom: 0.23em;
+}
+/* .hero.poster-hero .hero-year{
+  margin-bottom:.22em;
+  font-size:1.14em;
+} */
 .hero-sub{font-size:clamp(12px,2vw,23px);color:#e45b32;text-align:left;font-weight:500;margin-top:10px}
 .hero-korean{font-size:clamp(23px,4.8vw,43px)!important;font-weight:860!important;color:#9c512c!important;margin:35px 0 12px!important;line-height:1.3!important;letter-spacing:-.055em}
 .hero-venue{font-size:clamp(13px,2.2vw,17px)!important;color:#564137!important;line-height:1.85!important}
@@ -219,7 +240,7 @@ html{scroll-snap-type:none!important;scroll-behavior:auto}body{background:#fffaf
 .stage-scene .output{opacity:0}.stage-scene .output.on{opacity:1}
 .stage-scene .transform{display:none!important}
 .stage-scene .section-label{color:#bb5b38}
-.stage-scene h2.big{font-size:clamp(35px,6.5vw,60px);color:#a9422b;margin:15px 0 20px}
+.stage-scene h2.big{font-size:clamp(35px,6.5vw,53px);color:#a9422b;margin:15px 0 20px}
 .stage-scene .message{line-height:1.8;font-size:clamp(15px,2.25vw,20px);color:#725b52}
 .stage-scene[data-scene="message"]{max-width:710px}
 .stage-scene[data-scene="ticket"]{width:min(640px,calc(100% - 40px))}
@@ -277,7 +298,7 @@ html{scroll-snap-type:none!important;scroll-behavior:auto}body{background:#fffaf
 .stage-scene .compact-route .route-link{margin-top:12px;padding:10px 12px;min-height:39px}
 .stage-scene[data-scene="campus"] h2.big,.stage-scene[data-scene="building"] h2.big{margin:8px 0;font-size:clamp(28px,6vw,42px)}
 .closing-scene{text-align:center;max-width:720px}
-.closing-scene h2{font-size:clamp(52px,10vw,88px);line-height:1.06;letter-spacing:-.06em;margin:25px 0;color:#d8242e}
+.closing-scene h2{font-size:clamp(30px,10vw,50px);line-height:1.06;letter-spacing:-.06em;margin:25px 0;color:#d8242e}
 .closing-scene p{font-size:clamp(15px,2.5vw,20px);line-height:1.9;color:#83513e}
 .closing-meta{margin:35px auto 0;border-top:1px solid #ecc5b1;padding-top:20px;color:#9c5d43;font-size:13px;line-height:1.9}
 @media(max-width:620px){.stage{height:1120svh!important}.stage-scene[data-scene="campus"],.stage-scene[data-scene="building"]{max-height:calc(100dvh - 112px)}.stage-scene .compact-route{padding:12px}.stage-scene .compact-route .mini-map img,.stage-scene .compact-route .building-diagram img{max-height:33dvh}.stage-scene .compact-route .room-pair span{font-size:10px}}
@@ -505,15 +526,43 @@ body{overflow:hidden;touch-action:none}
  .stage-scene[data-scene="venue"] .sub-venue-campus.show,
  .stage-scene[data-scene="venue"] .sub-venue-building.show{animation:none}
 }
-</style></head><body><div class="scrollline" id="scrollline"></div><header class="top"><span class="brand">2026 · COMPUTER SOFTWARE</span><div class="top-actions"><a data-scene-target="3" href="#pinned-story">전시 정보</a><a data-scene-target="4" href="#pinned-story">오시는 길 ↗</a></div></header>
-<section class="stage" id="pinned-story"><div class="stage-sticky"><div aria-label="hero" class="stage-scene" data-scene="hero" role="group"><div class="intro-inner"><div class="eyebrow">2026 · GRADUATION EXHIBITION</div><h1 class="hero poster-hero"><span class="hero-year">2026</span><span>Capstone</span><span>Design &amp;</span><span>Creative</span><span>Exhibition</span></h1><div class="hero-sub">Dept. of Computer Software</div><p class="hero-korean">컴퓨터소프트웨어학과 전시회</p><p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p></div></div>
+</style></head>
+
+<body>
+  <div class="scrollline" id="scrollline"></div>
+  <header class="top">
+    <span class="brand">2026 · COMPUTER SOFTWARE</span>
+    <div class="top-actions">
+      <a data-scene-target="3" href="#pinned-story">전시 정보</a>
+      <a data-scene-target="4" href="#pinned-story">오시는 길 ↗</a>
+    </div>
+  </header>
+<section class="stage" id="pinned-story">
+  <div class="stage-sticky">
+    <div aria-label="hero" class="stage-scene" data-scene="hero" role="group">
+      <div class="intro-inner">
+        <div class="eyebrow">2026 · GRADUATION EXHIBITION</div>
+        <h1 class="hero poster-hero">
+          <span>2026</span>
+          <span>Capstone</span>
+          <span>Design &amp;</span>
+          <!-- <span>Design &amp;</span> -->
+          <span>Creative Work</span>
+          <!-- <span>Work</span> -->
+          <span>Exhibition</span>
+        </h1>
+        <div class="hero-sub">Dept. of Computer Software</div>
+        <p class="hero-korean">컴퓨터소프트웨어학과 전시회</p>
+        <p class="hero-venue">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 308호 / 307호</p>
+      </div>
+    </div>
 <div aria-label="code" class="stage-scene" data-scene="code" role="group"><div class="studio"><div class="code-head"><span>THE STORY BEGINS WITH CODE</span><span id="percent">00%</span></div><div class="frame" id="frame"><div class="framebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">capstone_2026.js</span></div><div class="editor"><div class="line"><span class="comment">// Everything starts with an idea.</span></div><div class="line"><span class="purple">const</span> idea = <span class="green">"가능성"</span>;</div><div class="line"><span class="purple">const</span> passion = <span class="green">"우리의 열정"</span>;</div><div class="line"><span class="purple">const</span> works = <span class="gold">create</span>(idea, passion);</div><div class="line"><span class="purple">const</span> exhibition = <span class="gold">build</span>(works);</div><div class="line"><span class="gold">openInvitation</span>(exhibition);</div><div class="output" id="output">✓ Compilation successful.<br/>✓ Your invitation is ready.</div></div></div><div class="status" id="hint">스크롤하면 코드가 완성됩니다 ↓</div></div></div>
 <div aria-label="invitation ticket" class="stage-scene" data-scene="invitation" role="group">
 <div class="invitation-wrap">
 <div class="section-label invite-outside-label">01 / THE INVITATION</div>
 <article class="invite-vertical-ticket">
 <div class="ticket-topzone">
-<h3 class="ticket-display-title">2026<br/>Capstone<br/>Design &amp;<br/>Creative<br/>Exhibition</h3>
+<h3 class="ticket-display-title">2026<br/>Capstone<br/>Design &amp;<br/>Creative<br/>Work<br/>Exhibition</h3>
 <h2 class="invite-big">우리의 이야기가<br/>전시회로 완성됩니다.</h2>
 <p class="invite-copy">학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간.<br/><br/>2026년 11월 13일, 경인여자대학교 컴퓨터소프트웨어학과의 3학년 캡스톤디자인 전시회와 2학년 창의작품 전시회에 여러분을 초대합니다.</p>
 </div>
@@ -547,7 +596,7 @@ body{overflow:hidden;touch-action:none}
 </div>
 </div>
 <div aria-label="찾아오시는 길" class="stage-scene" data-scene="venue" role="group">
-<div class="section-label">04 / FIND THE VENUE</div><h2 class="big">찾아오시는 길</h2>
+<div class="section-label">03 / FIND THE VENUE</div><h2 class="big">찾아오시는 길</h2>
 <article class="route-card compact-route substep sub-venue-campus">
 <div class="route-top"><span class="route-no">01 / CAMPUS</span><span class="route-chip">학교 위치</span></div>
 <h3>경인여자대학교</h3><p class="route-caption">인천광역시 계양구 계양산로 63</p>
@@ -556,14 +605,16 @@ body{overflow:hidden;touch-action:none}
 </article>
 <article class="route-card compact-route substep sub-venue-building">
 <div class="route-top"><span class="route-no">02 / DETAIL LOCATION</span><span class="route-chip">자세한 위치</span></div>
-<p class="route-caption">본관 왼쪽 입구로 들어와 3층에서 307호와 308호를 만나보세요.</p>
+<p class="route-caption">본관 왼쪽 입구로 들어와 3층으로 올라오세요.</p>
 <div class="building-diagram"><img alt="본관 진입 동선 및 엘리베이터 위치 안내" decoding="async" loading="lazy" src="main-building-guide.png"/></div>
-<div class="room-pair"><div><small>2학년 창의작품</small><strong>307호</strong><span>기획 PPT 패널</span></div><div><small>3학년 캡스톤디자인</small><strong>308호</strong><span>완성 작품</span></div></div>
+<div class="room-pair">
+<div><small>캡스톤디자인</small><strong>308호</strong><span>3학년</span></div>
+<div><small>창의작품</small><strong>307호</strong><span>2학년</span></div></div>
 </article>
 </div>
 <div aria-label="마지막 초대 메시지" class="stage-scene closing-scene" data-scene="closing" role="group">
-<div class="section-label">05 / SEE YOU THERE</div>
-<h2>전시회에서<br/>만나요!</h2>
+<div class="section-label">04 / SEE YOU THERE</div>
+<h2>전시회에서 만나요!</h2>
 <p>아이디어에서 작품으로 이어진 우리의 이야기를 만나보세요.<br/>소중한 분들과 이 초대장을 함께 나눠주세요.</p>
 <div class="closing-meta">2026. 11. 13. (금) · 10:00–18:00<br/>경인여자대학교 본관 3층 · 307호 / 308호</div>
 </div>
