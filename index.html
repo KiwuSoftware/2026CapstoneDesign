@@ -236,12 +236,22 @@ button { cursor: pointer; }
   .stage-scene[data-scene="venue"] {
     width: min(1120px, calc(100vw - 60px));
   }
+
+  /* [PC 전용] 넓어진 상세 위치 카드 때문에 제목이 왼쪽에 치우쳐 보이는 문제 보정.
+     카드 자체의 중앙 배치는 유지하고 라벨과 제목만 약 40px 오른쪽으로 이동합니다.
+     40px을 조정하면 두 제목의 좌측 시작 위치를 미세 조정할 수 있습니다. */
+  .stage-scene[data-scene="venue"] > .section-label,
+  .stage-scene[data-scene="venue"] > h2.big {
+    margin-left: 40px;
+  }
   .stage-scene[data-scene="venue"] .sub-venue-building {
     max-width: min(1020px, 100%);
   }
   .sub-venue-building .building-layout {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(190px, 1fr);
+    /* 오른쪽 안내 영역은 220px로 줄이고 나머지 공간은 지도에 할당합니다.
+       안내 칸 너비를 바꾸려면 마지막 220px만 수정하면 됩니다. */
+    grid-template-columns: minmax(0, 1fr) 220px;
     gap: 16px;
     align-items: stretch;
   }
@@ -260,19 +270,20 @@ button { cursor: pointer; }
   .sub-venue-building .room-pair {
     display: flex;
     flex-direction: column;
+    justify-content: center; /* 높이 전체로 늘리지 않고, 두 안내 카드 묶음을 중앙에 둠 */
     gap: 12px;
     margin-top: 0;
     min-width: 0;
   }
   .sub-venue-building .room-pair > div {
-    flex: 1;
-    min-height: 0;
+    flex: 0 0 auto;  /* 기존 flex:1 때문에 이미지 높이만큼 커지던 동작 중지 */
+    min-height: 122px; /* 내용에 비해 지나치게 큰 카드 높이 축소 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 9px;
-    padding: 18px;
+    gap: 7px;
+    padding: 14px 16px;
   }
 }
 
