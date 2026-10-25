@@ -1024,8 +1024,8 @@ button { cursor: pointer; }
       if (!element) return;
       // 측정은 offsetHeight 사용: transform으로 줄인 다음에도 원본 높이 측정 가능
       const height = element.offsetHeight;
-      const width = element.offsetWidth;
-      // const width = Math.max (element.offsetWidth, element.scrollWidth);
+      // const width = element.offsetWidth;
+      const width = Math.max (element.offsetWidth, element.scrollWidth);
       const maxWidth = Math.max(200, screenWidth - 50);
       const scale = wide ? Math.min(1, allowedHeight / Math.max(1,height), maxWidth / Math.max(1,width)) : 1;
       element.style.setProperty('--wide-fit-scale', scale.toFixed(4));
