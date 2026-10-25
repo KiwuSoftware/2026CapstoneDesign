@@ -220,6 +220,62 @@ button { cursor: pointer; }
 .room-pair strong { font-size: 20px; letter-spacing: -1px; color: #ab4b2d; }
 .room-pair span { font-size: 11px; color: #956c59; }
 
+
+/* ──────────────────────────────────────────────────────────────────────────
+   [반응형: 본관 상세 위치] 직접 수정할 때 확인할 곳
+   - 기본(모바일 세로): 위쪽 지도, 아래쪽 308호/307호 기존 2칸 구조 그대로.
+   - 가로 화면(768px 이상): 지도 2 : 전시실 카드 1 비율로 좌우 배치.
+   - 오른쪽 두 카드는 세로로 쌓이고 이미지 영역과 높이를 맞춥니다.
+   - 03 / FIND THE VENUE의 학교 주변 약도는 변경하지 않습니다.
+   - 이미지 크기: 아래 49dvh / 500px 수치를 변경하면 됩니다.
+   ────────────────────────────────────────────────────────────────────────── */
+.building-layout { display: block; } /* 모바일 기존 배치 유지 */
+
+@media (min-width: 768px) and (orientation: landscape) {
+  /* 이미지를 키우기 위해 자세한 위치 장면과 카드만 넓힙니다. */
+  .stage-scene[data-scene="venue"] {
+    width: min(1120px, calc(100vw - 60px));
+  }
+  .stage-scene[data-scene="venue"] .sub-venue-building {
+    max-width: min(1020px, 100%);
+  }
+  .sub-venue-building .building-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(190px, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+  .sub-venue-building .building-diagram {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sub-venue-building .building-diagram img {
+    width: 100%;
+    height: min(49dvh, 500px);
+    max-height: none;
+    object-fit: contain; /* 안내 이미지가 잘리지 않고 전부 보이게 */
+  }
+  .sub-venue-building .room-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 0;
+    min-width: 0;
+  }
+  .sub-venue-building .room-pair > div {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 18px;
+  }
+}
+
 /* ③-6 마지막 인사 / 장면 진행 점 / 스크롤 힌트 */
 .closing-scene { text-align: center; max-width: 720px; }
 .closing-scene h2 { font-size: clamp(30px,10vw,50px); line-height: 1.06; letter-spacing: -.06em; margin: 25px 0; color: #d8242e; }
@@ -757,10 +813,14 @@ button { cursor: pointer; }
      <p class="route-caption">
       본관 왼쪽 입구로 들어와 3층으로 올라오세요.
      </p>
-     <div class="building-diagram">
-      <img alt="본관 진입 동선 및 엘리베이터 위치 안내" decoding="async" loading="lazy" src="main-building-guide.png"/>
-     </div>
-     <div class="room-pair">
+     <!-- [반응형 본관 안내] PC/아이패드 가로: 왼쪽 큰 지도 + 오른쪽 세로 전시실 카드.
+          모바일 세로: 기존처럼 지도 위 + 전시실 카드 아래 두 칸.
+          아래 building-layout은 CSS 배치에만 사용하며 이미지/내용/동작은 변경하지 않습니다. -->
+     <div class="building-layout">
+      <div class="building-diagram">
+       <img alt="본관 진입 동선 및 엘리베이터 위치 안내" decoding="async" loading="lazy" src="main-building-guide.png"/>
+      </div>
+      <div class="room-pair">
       <div>
        <small>
         캡스톤디자인
@@ -784,6 +844,7 @@ button { cursor: pointer; }
        </span>
       </div>
      </div>
+     </div><!-- /.building-layout: PC 가로 배치 그룹 끝 -->
     </article>
    </div>
    <!-- [장면 5 / 마지막 인사] 문구와 날짜를 편집하는 곳 -->
