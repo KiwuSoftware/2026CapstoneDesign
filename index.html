@@ -107,8 +107,8 @@ button { cursor: pointer; }
 .message { font-size: clamp(15px,2.25vw,20px); line-height: 1.8; color: #725b52; }
 
 /* ③-1 메인 화면. 제목 크기가 화면 높이/너비에 맞게 자동 조정됨 */
-.stage-scene[data-scene="hero"] { text-align: left; width: min(800px,calc(100vw - 64px)); }
-.intro-inner { max-width: 740px; margin: auto; }
+.stage-scene[data-scene="hero"] { text-align: left; width: min(1000px,calc(100% - 64px)); }
+.intro-inner { width: 100%; max-width: 100%; margin: auto; }
 .eyebrow { color: #bc432e; letter-spacing: 2.3px; font-size: 12px; font-weight: 900; }
 .hero.poster-hero { font-weight: 950; letter-spacing: -.067em; line-height: 1.08; margin: 24px 0 15px; font-size: clamp(32px,min(5.5vw,7.5dvh),76px); }
 .hero.poster-hero span { display: block; width: fit-content; max-width: 100%; background: var(--sunset); background-clip: text; -webkit-background-clip: text; color: transparent; padding-bottom: .23em; }
