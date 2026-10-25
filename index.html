@@ -22,6 +22,10 @@
   <meta name="twitter:title" content="2026 Capstone Design &amp; Creative Work Exhibition">
   <meta name="twitter:description" content="경인여자대학교 컴퓨터소프트웨어학과 전시회에 초대합니다.">
   <meta name="twitter:image" content="https://kiwusoftware.github.io/2026CapstoneDesign/og-preview.jpg">
+  <!-- [글꼴 통일] 온라인에서는 Google Fonts의 Noto Sans KR을 불러옵니다. 로드 전/오프라인에는 대체 글꼴이 표시될 수 있습니다. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
 /*
 ==============================================================================
@@ -59,7 +63,7 @@ html, body { margin: 0; height: 100%; overscroll-behavior: none; }
 body {
   background: var(--color-background);
   color: var(--color-text);
-  font-family: system-ui, -apple-system, "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", sans-serif; /* 기기마다 달랐던 시스템 기본 폰트 대신 같은 웹폰트 우선 사용 */
   overflow: hidden;            /* ★ 일반 페이지 스크롤 대신 JS 단계 전환을 사용 */
   touch-action: none;          /* 터치 제스처를 JS에서 한 번씩 받기 위한 설정 */
 }
@@ -121,7 +125,7 @@ button { cursor: pointer; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: #80d9bf; }
 .dot:first-child { background: #edaa91; } .dot:nth-child(2) { background: #f5d788; }
 .filename { margin-left: 12px; }
-.editor { height: clamp(250px,48dvh,450px); padding: 26px clamp(17px,4vw,35px); font: clamp(12px,2.1vw,18px)/2.2 ui-monospace,SFMono-Regular,Consolas,monospace; white-space: pre-wrap; overflow: hidden; color: #e4edf8; }
+.editor { height: clamp(250px,48dvh,450px); padding: 26px clamp(17px,4vw,35px); font: clamp(12px,2.1vw,18px)/2.2 "Roboto Mono", "Noto Sans KR", monospace; white-space: pre-wrap; overflow: hidden; color: #e4edf8; }
 .editor .line { opacity: .18; transform: translateY(8px); color: #dce8fa; transition: opacity .35s ease, transform .35s ease; }
 .editor .line.on { opacity: 1; transform: none; }
 .editor .comment { color: #79dbe1; } .editor .purple { color: #d4b6ff; } .editor .green { color: #9df0c1; } .editor .gold { color: #ffdb9a; }
@@ -289,6 +293,51 @@ button { cursor: pointer; }
   }
 }
 @media(prefers-reduced-motion:reduce) { .code-progress-fill { transition: none; } }
+
+/* ============================================================================
+   [추가 2026-10-25] PC + 태블릿 가로 화면 최적화
+   - 모바일 세로 화면(max-width: 767px)은 기존 CSS 그대로 유지합니다.
+   - 충분히 넓은 가로 화면에서는 제목과 티켓의 불필요한 높이를 살짝 줄입니다.
+   - 아래 CSS만으로 모자라는 경우 JS fitWideScenes()가 실제 콘텐츠 높이를
+     측정해서 '무대 한 화면' 안에 들어가도록 1 이하 배율로 축소합니다.
+   - 수정 가능 값: --wide-safe-top(상단메뉴 포함 위 여백),
+     --wide-safe-bottom(하단 화살표/점 포함 아래 여백).
+   ============================================================================ */
+:root {
+  --wide-safe-top: 78px;
+  --wide-safe-bottom: 76px;
+}
+@media (min-width: 768px) and (orientation: landscape) {
+  /* 원본 장면 상단/하단 위치는 그대로 두고 '내부 콘텐츠'만 축소 */
+  [data-scene="hero"] .intro-inner,
+  [data-scene="invitation"] .invitation-wrap {
+    transform: scale(var(--wide-fit-scale, 1));
+    transform-origin: center center;
+  }
+  /* 수직 여유를 먼저 확보하고, 모자라는 정도만 JS로 추가 축소 */
+  .hero.poster-hero {
+    font-size: clamp(32px, min(6.5vw, 8.2dvh), 85px);
+    line-height: 1.025;
+    margin: 10px 0 9px;
+  }
+  .hero.poster-hero span { padding-bottom: .11em; }
+  .stage-scene[data-scene="hero"] .hero-korean { margin: 15px 0 7px; font-size: clamp(21px, 3vw, 34px); }
+  .stage-scene[data-scene="hero"] .hero-sub { margin-top: 3px; font-size: clamp(12px, 1.5vw, 18px); }
+  .stage-scene[data-scene="hero"] .hero-venue { line-height: 1.45; font-size: clamp(12px, 1.2vw, 15px); }
+
+  [data-scene="invitation"] .invitation-wrap { gap: 9px; }
+  [data-scene="invitation"] .ticket-topzone { padding: 20px 24px 14px; }
+  [data-scene="invitation"] .ticket-display-title {
+    font-size: clamp(26px, min(4.2vw, 6dvh), 45px);
+    line-height: 1.035;
+  }
+  [data-scene="invitation"] .invite-big { margin-top: 14px; font-size: clamp(17px, 1.55vw, 23px); line-height: 1.25; }
+  [data-scene="invitation"] .invite-copy { margin-top: 10px; font-size: 13px; line-height: 1.55; }
+  [data-scene="invitation"] .barcode-zone { padding-top: 12px; padding-bottom: 13px; }
+  [data-scene="invitation"] .barcode-wrap { height: 43px; }
+  [data-scene="invitation"] .barcode-number { margin-top: 7px; }
+}
+/* 세로 모바일은 위 미디어 쿼리가 적용되지 않아 기존 디자인 그대로 유지 */
 
 </style>
 </head>
@@ -951,6 +1000,45 @@ button { cursor: pointer; }
   if (hint) hint.innerHTML = '<span class="hint-chevrons" aria-hidden="true"></span><span class="sr-only">아래로 스크롤하여 다음 내용 보기</span>';
 
   // 시작/새로고침 복원 시 첫 화면을 그립니다.
+
+  /* ========================================================================
+     [추가] 넓은 화면 장면 크기 자동 맞춤
+     - 메인 / 티켓 내용의 실제 높이를 읽어 안전영역 안으로 줄입니다.
+     - 텍스트 크기 자체를 영구 변경하지 않고 내부 wrapper만 비율 축소합니다.
+     - 가로 화면이 아니면 기존 모바일 값을 복구(1배)합니다.
+     - 로딩된 웹폰트가 글자 너비/높이를 바꿀 수 있어 폰트 로드 후도 재계산합니다.
+     ======================================================================== */
+  function fitWideScenes() {
+    const wide = window.matchMedia('(min-width: 768px) and (orientation: landscape)').matches;
+    const screenHeight = window.innerHeight;
+    const rootStyle = getComputedStyle(document.documentElement);
+    const safeTop = parseFloat(rootStyle.getPropertyValue('--wide-safe-top')) || 78;
+    const safeBottom = parseFloat(rootStyle.getPropertyValue('--wide-safe-bottom')) || 76;
+    const allowedHeight = Math.max(160, screenHeight - safeTop - safeBottom);
+    const screenWidth = window.innerWidth;
+    const targets = [
+      document.querySelector('[data-scene="hero"] .intro-inner'),
+      document.querySelector('[data-scene="invitation"] .invitation-wrap')
+    ];
+    targets.forEach(element => {
+      if (!element) return;
+      // 측정은 offsetHeight 사용: transform으로 줄인 다음에도 원본 높이 측정 가능
+      const height = element.offsetHeight;
+      const width = element.offsetWidth;
+      const maxWidth = Math.max(200, screenWidth - 50);
+      const scale = wide ? Math.min(1, allowedHeight / Math.max(1,height), maxWidth / Math.max(1,width)) : 1;
+      element.style.setProperty('--wide-fit-scale', scale.toFixed(4));
+    });
+  }
+  window.addEventListener('resize', fitWideScenes, { passive: true });
+  window.addEventListener('orientationchange', fitWideScenes);
+  window.addEventListener('pageshow', fitWideScenes);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fitWideScenes).catch(() => {});
+  }
+  // 초기 프레임에서 한번 측정하고, 글꼴 로딩 후 다시 측정합니다.
+  fitWideScenes();
+
   render(true);
 })();
 </script>
