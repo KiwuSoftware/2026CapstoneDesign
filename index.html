@@ -184,7 +184,7 @@ button { cursor: pointer; }
 .route-link { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 40px; margin-top: 10px; padding: 11px 14px; text-decoration: none; font-size: 13px; font-weight: 800; color: #fff; border-radius: 13px; background: var(--sunset); }
 .room-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 7px; }
 .room-pair > div { display: grid; gap: 5px; padding: 12px; border: 1px solid #f4dbc8; border-radius: 13px; background: #fff0e6; }
-.room-pair small { font-size: 10px; font-weight: 800; color: #ab4b2d; }
+.room-pair small { font-size: 15px; font-weight: 800; color: #ab4b2d; }
 .room-pair strong { font-size: 20px; letter-spacing: -1px; color: #ab4b2d; }
 .room-pair span { font-size: 11px; color: #956c59; }
 
@@ -192,7 +192,7 @@ button { cursor: pointer; }
 .closing-scene { text-align: center; max-width: 720px; }
 .closing-scene h2 { font-size: clamp(30px,10vw,50px); line-height: 1.06; letter-spacing: -.06em; margin: 25px 0; color: #d8242e; }
 .closing-scene p { font-size: clamp(15px,2.5vw,20px); line-height: 1.9; color: #83513e; }
-.closing-meta { margin: 35px auto 0; border-top: 1px solid #ecc5b1; padding-top: 20px; color: #9c5d43; font-size: 13px; line-height: 1.9; }
+.closing-meta { margin: 35px auto 0; border-top: 1px solid #ecc5b1; padding-top: 20px; color: #9c5d43; font-size: 15px; line-height: 1.9; }
 .stage-progress { position: absolute; z-index: 4; bottom: 19px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; pointer-events: none; }
 .stage-progress span { width: 6px; height: 6px; border-radius: 50%; background: #e7c9ba; transition: width .25s,background .25s; }
 .stage-progress span.on { width: 28px; border-radius: 6px; background: #e94c28; }
@@ -433,9 +433,6 @@ button { cursor: pointer; }
      <div class="code-progress" role="progressbar" aria-label="코드 작성 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="code-progress">
        <div class="code-progress-fill" id="code-progress-fill"></div>
      </div>
-     <div class="status" id="hint">
-      스크롤하면 코드가 완성됩니다 &darr;
-     </div>
     </div>
    </div>
    <!-- [장면 2 / 티켓] 티켓 문구·절취선·장식용 바코드를 편집하는 곳 -->
@@ -460,7 +457,6 @@ button { cursor: pointer; }
         </h2>
        <p class="invite-copy">
         <!-- 학생들의 아이디어와 배움, 수많은 시도와 고민이 하나의 작품으로 완성되는 순간. -->
-        <br/>
         <br/>
         2026년 11월 13일,
         <br/>
@@ -682,9 +678,9 @@ button { cursor: pointer; }
      전시회에서 만나요!
     </h2>
     <p>
-     아이디어에서 작품으로 이어진 우리의 이야기를 만나보세요.
-     <br/>
-     소중한 분들과 이 초대장을 함께 나눠주세요.
+     아이디어에서 작품으로.
+    <br/>
+     우리의 이야기를 만나보세요.
     </p>
     <div class="closing-meta">
      2026. 11. 13. (금) &middot; 10:00&ndash;18:00
