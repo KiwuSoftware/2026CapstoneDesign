@@ -242,16 +242,18 @@ button { cursor: pointer; }
      40px을 조정하면 두 제목의 좌측 시작 위치를 미세 조정할 수 있습니다. */
   .stage-scene[data-scene="venue"] > .section-label,
   .stage-scene[data-scene="venue"] > h2.big {
-    margin-left: 40px;
+    width: min(880px, calc(100vw - 28px));
+    margin-left: auto;
+    margin-right: auto;
   }
   .stage-scene[data-scene="venue"] .sub-venue-building {
-    max-width: min(1020px, 100%);
+    max-width: min(880px, 100%);
   }
   .sub-venue-building .building-layout {
     display: grid;
     /* 오른쪽 안내 영역은 220px로 줄이고 나머지 공간은 지도에 할당합니다.
        안내 칸 너비를 바꾸려면 마지막 220px만 수정하면 됩니다. */
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) 150px;
     gap: 16px;
     align-items: stretch;
   }
@@ -874,7 +876,7 @@ button { cursor: pointer; }
     <div class="closing-meta">
      2026. 11. 13. (금) &middot; 10:00&ndash;18:00
      <br/>
-     경인여자대학교 본관 3층 &middot; 307호 / 308호
+     경인여자대학교 본관 3층 &middot; 308호 / 307호
     </div>
    </div>
    <div class="stage-hint">
